@@ -1,3 +1,152 @@
+use sha256::digest;
+
+#[derive(Debug)]
+struct Block {
+	index: u32,
+	nonce: u32,
+	data : String,
+	hash : String,
+}
+
+
+
+fn mining(previous_block_hash: String, current_transactions: &mut Block) -> (String, u32) {
+	let mut nonce: u32 = 0;
+
+	let to_hash: String    = format!("{}{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data, nonce);
+	let block_hash: String = digest(to_hash);
+	return (block_hash, nonce);
+}
+
 fn main() {
 	println!("Hello, proof of stack!");
+
+	let mut block_chain: Vec<Block> = Vec::new();
+
+	// Create the first block in the chain
+	let genesis_block: Block = Block {
+		index: 0,
+		nonce: 42,
+		data : "First transaction from Genesis block.".to_string(),
+		hash : "".to_string(),
+	};
+	block_chain.push(genesis_block);
+
+	let block: Block = Block {
+		index: 1,
+		nonce: 42,
+		data : "Alyra".to_string(),
+		hash : "".to_string(),
+	};
+	block_chain.push(block);
+
+	let block: Block = Block {
+		index: 2,
+		nonce: 42,
+		data : "the".to_string(),
+		hash : "".to_string(),
+	};
+	block_chain.push(block);
+
+	let block: Block = Block {
+		index: 3,
+		nonce: 42,
+		data : "blockchain".to_string(),
+		hash : "".to_string(),
+	};
+	block_chain.push(block);
+
+	let block: Block = Block {
+		index: 4,
+		nonce: 42,
+		data : "school!".to_string(),
+		hash : "".to_string(),
+	};
+	block_chain.push(block);
+
+	let mut previous_hash = "0000000000000000000000000000000000000000000000000000000000000000".to_string();
+
+	for block in &mut block_chain {
+		let data = &block.data;
+		let (hash, nonce) = mining(
+			previous_hash.clone(),
+			block
+		);
+
+		block.nonce   = nonce;
+		block.hash    = hash.clone();
+		previous_hash = hash;
+	}
+
+	dbg!(block_chain);
+
+}
+
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn sha256_checks() {
+		let input: String = String::from("hello");
+		let val: String   = digest(input);
+		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		
+		//sha256 digest &str
+		let input: &str = "hello";
+		let val: String = digest(input);
+		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		
+		//sha256 digest &mut &str
+		let mut input: &str = "hello";
+		let val: String     = digest(&mut input);
+		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		
+		//sha256 digest char
+		let input: &str = "π";
+		let val: String = digest(input);
+		assert_eq!(val,"2617fcb92baa83a96341de050f07a3186657090881eae6b833f66a035600f35a");
+	
+	
+		let input: &[u8; 5] = b"hello";
+		let val: String     = digest(input);
+		assert_eq!(val, "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+	}
+
+
+	#[test]
+	fn mining_genesis() {
+		let mut genesis_block: Block = Block {
+			index: 0,
+			nonce: 42,
+			data : "First transaction from Genesis block.".to_string(),
+			hash : "".to_string(),
+		};
+	
+		let (hash, nonce) = mining(
+			"0000000000000000000000000000000000000000000000000000000000000000".to_string(),
+			&mut genesis_block
+		);
+		assert_eq!(hash, "0000a0d03a84ce3be1458b7df3586876dcee8caa1aa518e27dd8a086a1de30b0");
+		assert_eq!(nonce, 1971);
+	}
+
+	#[test]
+	fn mining_block() {
+		let mut alyra_block: Block = Block {
+			index: 1,
+			nonce: 42,
+			data : "Alyra".to_string(),
+			hash : "".to_string(),
+		};
+	
+		let (hash, nonce) = mining(
+			"0000a0d03a84ce3be1458b7df3586876dcee8caa1aa518e27dd8a086a1de30b0".to_string(),
+			&mut alyra_block
+		);
+		assert_eq!(hash, "0000f8bde4bf5fc9597721996524a1ca6c32635661ad3cf79a397b4177e1ac15");
+		assert_eq!(nonce, 2659);
+	}
+
 }
