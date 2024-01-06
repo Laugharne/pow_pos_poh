@@ -26,56 +26,31 @@ fn mining(previous_block_hash: String, current_transactions: &mut Block, difficu
 	}
 }
 
+
+fn set_block(index: u32, transactions: String) -> Block {
+	Block {
+		index     : index,
+		nonce     : 0,
+		data      : transactions,
+		hash      : "".to_string(),
+	}
+}
+
+
 fn main() {
 	println!("Hello, proof of work!");
 
 	let mut block_chain: Vec<Block> = Vec::new();
 
-	// Create the first block in the chain
-	let genesis_block: Block = Block {
-		index: 0,
-		nonce: 42,
-		data : "First transaction from Genesis block.".to_string(),
-		hash : "".to_string(),
-	};
-	block_chain.push(genesis_block);
-
-	let block: Block = Block {
-		index: 1,
-		nonce: 42,
-		data : "Alyra".to_string(),
-		hash : "".to_string(),
-	};
-	block_chain.push(block);
-
-	let block: Block = Block {
-		index: 2,
-		nonce: 42,
-		data : "the".to_string(),
-		hash : "".to_string(),
-	};
-	block_chain.push(block);
-
-	let block: Block = Block {
-		index: 3,
-		nonce: 42,
-		data : "blockchain".to_string(),
-		hash : "".to_string(),
-	};
-	block_chain.push(block);
-
-	let block: Block = Block {
-		index: 4,
-		nonce: 42,
-		data : "school!".to_string(),
-		hash : "".to_string(),
-	};
-	block_chain.push(block);
+	block_chain.push(set_block(0, "First transaction from Genesis block.".to_string()));
+	block_chain.push(set_block(1, "Alyra".to_string()));
+	block_chain.push(set_block(2, "the".to_string()));
+	block_chain.push(set_block(3, "blockchain".to_string()));
+	block_chain.push(set_block(4, "school!".to_string()));
 
 	let mut previous_hash = "0000000000000000000000000000000000000000000000000000000000000000".to_string();
 
 	for block in &mut block_chain {
-		let data = &block.data;
 		let (hash, nonce) = mining(
 			previous_hash.clone(),
 			block,
