@@ -35,7 +35,7 @@ fn main() {
 	block_chain.push(set_block(3, "blockchain".to_string()));
 	block_chain.push(set_block(4, "school!".to_string()));
 
-	let mut previous_hash = "0000000000000000000000000000000000000000000000000000000000000000".to_string();
+	let mut previous_hash = "00".repeat(32);
 
 	for block in &mut block_chain {
 		let hash = compute_block(
@@ -95,7 +95,7 @@ mod tests {
 		};
 	
 		let hash = compute_block(
-			"0000000000000000000000000000000000000000000000000000000000000000".to_string(),
+			"00".repeat(32).to_string(),
 			&mut genesis_block
 		);
 		assert_eq!(hash, "610b5b47edd3c32f80f4ebd9f5f9a1e1b5ee570a1e5949aa7af0cf5741cb969f");

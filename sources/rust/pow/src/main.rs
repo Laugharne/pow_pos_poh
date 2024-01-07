@@ -48,7 +48,7 @@ fn main() {
 	block_chain.push(set_block(3, "blockchain".to_string()));
 	block_chain.push(set_block(4, "school!".to_string()));
 
-	let mut previous_hash = "0000000000000000000000000000000000000000000000000000000000000000".to_string();
+	let mut previous_hash = "00".repeat(32);
 
 	for block in &mut block_chain {
 		let (hash, nonce) = mining(
@@ -75,27 +75,42 @@ mod tests {
 	fn sha256_checks() {
 		let input: String = String::from("hello");
 		let val: String   = digest(input);
-		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		assert_eq!(
+			val,
+			"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+		);
 		
 		//sha256 digest &str
 		let input: &str = "hello";
 		let val: String = digest(input);
-		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		assert_eq!(
+			val,
+			"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+		);
 		
 		//sha256 digest &mut &str
 		let mut input: &str = "hello";
 		let val: String     = digest(&mut input);
-		assert_eq!(val,"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		assert_eq!(
+			val,
+			"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+		);
 		
 		//sha256 digest char
 		let input: &str = "π";
 		let val: String = digest(input);
-		assert_eq!(val,"2617fcb92baa83a96341de050f07a3186657090881eae6b833f66a035600f35a");
-	
-	
+		assert_eq!(
+			val,
+			"2617fcb92baa83a96341de050f07a3186657090881eae6b833f66a035600f35a"
+		);
+
 		let input: &[u8; 5] = b"hello";
 		let val: String     = digest(input);
-		assert_eq!(val, "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824");
+		assert_eq!(
+			val,
+			"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+		);
+
 	}
 
 
@@ -109,16 +124,19 @@ mod tests {
 		};
 	
 		let (hash, nonce) = mining(
-			"0000000000000000000000000000000000000000000000000000000000000000".to_string(),
+			"00".repeat(32).to_string(),
 			&mut genesis_block,
 			2
 		);
-		assert_eq!(hash, "0000a0d03a84ce3be1458b7df3586876dcee8caa1aa518e27dd8a086a1de30b0");
+		assert_eq!(
+			hash,
+			"0000a0d03a84ce3be1458b7df3586876dcee8caa1aa518e27dd8a086a1de30b0"
+		);
 		assert_eq!(nonce, 1971);
 	}
 
 	#[test]
-	fn mining_block() {
+	fn mining_alyra_block() {
 		let mut alyra_block: Block = Block {
 			index: 1,
 			nonce: 42,
@@ -131,7 +149,10 @@ mod tests {
 			&mut alyra_block,
 			2
 		);
-		assert_eq!(hash, "0000f8bde4bf5fc9597721996524a1ca6c32635661ad3cf79a397b4177e1ac15");
+		assert_eq!(
+			hash,
+			"0000f8bde4bf5fc9597721996524a1ca6c32635661ad3cf79a397b4177e1ac15"
+		);
 		assert_eq!(nonce, 2659);
 	}
 
