@@ -4,22 +4,20 @@ use sha256::digest;
 struct Block {
 	index: u32,
 	data : String,
-	hash : String,
 }
 
 
 fn compute_block(previous_block_hash: String, current_transactions: &mut Block) -> String {
 	let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
 	let block_hash: String = digest(to_hash);
-	return block_hash;
+	block_hash
 }
 
 
 fn set_block(index: u32, transactions: String) -> Block {
 	Block {
-		index     : index,
-		data      : transactions,
-		hash      : "".to_string(),
+		index: index,
+		data : transactions,
 	}
 }
 
@@ -43,7 +41,6 @@ fn main() {
 			block
 		);
 
-		block.hash    = hash.clone();
 		previous_hash = hash;
 	}
 
@@ -91,7 +88,6 @@ mod tests {
 		let mut genesis_block: Block = Block {
 			index: 0,
 			data : "First transaction from Genesis block.".to_string(),
-			hash : "".to_string(),
 		};
 	
 		let hash = compute_block(
@@ -108,7 +104,6 @@ mod tests {
 		let mut alyra_block: Block = Block {
 			index: 1,
 			data : "Alyra".to_string(),
-			hash : "".to_string(),
 		};
 	
 		let hash = compute_block(

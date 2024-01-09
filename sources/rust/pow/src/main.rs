@@ -3,9 +3,7 @@ use sha256::digest;
 #[derive(Debug)]
 struct Block {
 	index: u32,
-	nonce: u32,
 	data : String,
-	hash : String,
 }
 
 
@@ -29,10 +27,8 @@ fn mining(previous_block_hash: String, current_transactions: &mut Block, difficu
 
 fn set_block(index: u32, transactions: String) -> Block {
 	Block {
-		index     : index,
-		nonce     : 0,
-		data      : transactions,
-		hash      : "".to_string(),
+		index: index,
+		data : transactions,
 	}
 }
 
@@ -57,8 +53,6 @@ fn main() {
 			2
 		);
 
-		block.nonce   = nonce;
-		block.hash    = hash.clone();
 		previous_hash = hash;
 	}
 
@@ -118,9 +112,7 @@ mod tests {
 	fn mining_genesis() {
 		let mut genesis_block: Block = Block {
 			index: 0,
-			nonce: 42,
 			data : "First transaction from Genesis block.".to_string(),
-			hash : "".to_string(),
 		};
 	
 		let (hash, nonce) = mining(
@@ -139,9 +131,7 @@ mod tests {
 	fn mining_alyra_block() {
 		let mut alyra_block: Block = Block {
 			index: 1,
-			nonce: 42,
 			data : "Alyra".to_string(),
-			hash : "".to_string(),
 		};
 	
 		let (hash, nonce) = mining(
