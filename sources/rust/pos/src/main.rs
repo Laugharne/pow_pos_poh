@@ -7,7 +7,7 @@ struct Block {
 }
 
 
-fn compute_block(previous_block_hash: String, current_transactions: &Block) -> String {
+fn validation_block(previous_block_hash: String, current_transactions: &Block) -> String {
 	let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
 	let block_hash: String = digest(to_hash);
 	block_hash
@@ -36,7 +36,7 @@ fn main() {
 	let mut previous_hash = "00".repeat(32);
 
 	block_chain.iter().enumerate().for_each(|(_,block)| {
-		let hash = compute_block(
+		let hash = validation_block(
 			previous_hash.clone(),
 			block,
 		);
@@ -92,14 +92,14 @@ mod tests {
 
 
 	#[test]
-	fn compute_genesis() {
+	fn validation_block_genesis() {
 
 		let genesis_block: Block = Block {
 			index: 0,
 			data : "First transaction from Genesis block.".to_string(),
 		};
 	
-		let hash = compute_block(
+		let hash = validation_block(
 			"00".repeat(32).to_string(),
 			&genesis_block
 		);
@@ -108,14 +108,14 @@ mod tests {
 	}
 
 	#[test]
-	fn compute_alyra_block() {
+	fn validation_block_alyra() {
 
 		let alyra_block: Block = Block {
 			index: 1,
 			data : "Alyra".to_string(),
 		};
 	
-		let hash = compute_block(
+		let hash = validation_block(
 			"610b5b47edd3c32f80f4ebd9f5f9a1e1b5ee570a1e5949aa7af0cf5741cb969f".to_string(),
 			&alyra_block
 		);

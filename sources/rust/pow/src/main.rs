@@ -8,7 +8,7 @@ struct Block {
 
 
 
-fn mining(previous_block_hash: String, current_transactions: &Block, difficulty: usize) -> (String, u32) {
+fn mining_block(previous_block_hash: String, current_transactions: &Block, difficulty: usize) -> (String, u32) {
 	let prefix: String = "00".repeat(difficulty);
 	let mut nonce: u32 = 0;
 
@@ -47,7 +47,7 @@ fn main() {
 	let mut previous_hash = "00".repeat(32);
 
 	block_chain.iter().enumerate().for_each(|(_,block)| {
-		let (hash, nonce) = mining(
+		let (hash, nonce) = mining_block(
 			previous_hash.clone(),
 			block,
 			2
@@ -110,13 +110,13 @@ mod tests {
 
 
 	#[test]
-	fn mining_genesis() {
+	fn mining_block_genesis() {
 		let genesis_block: Block = Block {
 			index: 0,
 			data : "First transaction from Genesis block.".to_string(),
 		};
 	
-		let (hash, nonce) = mining(
+		let (hash, nonce) = mining_block(
 			"00".repeat(32).to_string(),
 			&genesis_block,
 			2
@@ -129,13 +129,13 @@ mod tests {
 	}
 
 	#[test]
-	fn mining_alyra_block() {
+	fn mining_block_alyra() {
 		let alyra_block: Block = Block {
 			index: 1,
 			data : "Alyra".to_string(),
 		};
 	
-		let (hash, nonce) = mining(
+		let (hash, nonce) = mining_block(
 			"0000a0d03a84ce3be1458b7df3586876dcee8caa1aa518e27dd8a086a1de30b0".to_string(),
 			&alyra_block,
 			2
