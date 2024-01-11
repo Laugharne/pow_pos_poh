@@ -24,13 +24,24 @@ Les rôles des algorithmes de consensus sont les suivants :
 
 La **sychronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient corrects sont essentiels, sinon il y a un risque de **double dépense**.
 
-Il existe plusieurs manière de faire. En voici trois parmis les plus importants ou usités.
-1. La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
-2. La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
-3. La **preuve d'historique** (*proof of history*) présente sur **Solana**.
+Il existe plusieurs manière de faire. En voici trois parmis les plus importantes ou usitées.
+- La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
+- La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
+- La **preuve d'historique** (*proof of history*) présente sur **Solana**.
+
 
 
 ## ⚒️ Proof of Work (PoW)
+
+La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un puzzle  mathématique qui dépend du contenu du bloc et de son précédent.
+
+Le premier nœud à résoudre correctement est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins proportionnel au temps mis.
+
+Notez qu’il n’y a pas de limite de nombre de participants car
+nul ne peut dire si quelqu’un va arriver en premier.
+
+![](assets/pow_diagram.png)
+
 
 **Version simplifiée du minage (PoW) en Rust :**
 ```rust
@@ -53,8 +64,17 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
+La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques beaucoup moins intensifs.
 
-**Version simplifiée de création de bloc (PoW) en Rust :**
+Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc.
+
+L'idée fondamentale est que les individus/entités qui ont un intérêt financier dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
+
+![](assets/pos_diagram.png)
+
+
+
+**Version simplifiée de création de bloc (PoS) en Rust :**
 ```rust
 fn creation_block(previous_block_hash: String, current_transactions: &Block) -> String {
 	let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
@@ -65,6 +85,13 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 
 
 ## 📜 Proof of History (PoH)
+
+La preuve d'historique est utilisée par **Solana**. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation de **toutes ses suivantes**.
+  
+En prenant un exemple simple, imaginez une **chaîne de montagnes** : pour en atteindre la fin, il faut d'abord gravir le premier sommet, puis le suivant, etc., jusqu'à atteindre le sommet final. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
+
+La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
+
 
 En 2008, **Satoshi Nakamoto**, dans son ["White paper"](https://bitcoin.org/bitcoin.pdf) (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
 
@@ -93,12 +120,12 @@ N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**fu
   - 🇬🇧 [Hash function - Wikipedia](https://en.wikipedia.org/wiki/Hash_function)
   - 🇫🇷 [SHA-3 — Wikipédia](https://fr.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [SHA-3 - Wikipedia](https://en.wikipedia.org/wiki/SHA-3)
-  - 🇬🇧 [Blockchain Demo](https://andersbrownworth.com/blockchain/hash)
+  - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/hash)
 
 - **PoW :**
   - 🇫🇷 [Bitcoin : un système de paiement électronique pair-à-pair](https://bitcoin.org/files/bitcoin-paper/bitcoin_fr.pdf)
   - 🇬🇧 ["Bitcoin: A Peer-to-Peer Electronic Cash System"](https://bitcoin.org/bitcoin.pdf)
-  - 🇬🇧 [Blockchain Demo](https://andersbrownworth.com/blockchain/blockchain)
+  - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/blockchain)
   - 🇬🇧 [What is Proof of Work? (Cryptocurrency Explanation) - YouTube](https://www.youtube.com/watch?v=XLcWy1uV8YM)
 
 - **PoS :**
