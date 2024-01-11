@@ -8,20 +8,26 @@
 
 ## TL;DR
 
+1. Le mécanisme de consensus est un procédé par lequel les noeuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
+2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique, et divers aspects du d'une blockchain.
+
 
 ## Introduction
 
-Le mécanisme de **consensus**, est un procédé par lequel les noeuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations, et permet ainsi de se mettre d'accord sur une **version commune et unique** des données partagées, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
+Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce malgré la possible présence de nœuds **défaillants** ou **malveillants**.
 
-Les rôles des algorithmes de consensus dans les blockchains sont les suivants :
+Les rôles des algorithmes de consensus sont les suivants :
 1. **Accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
-2. **Résistance aux défaillances :** Le réseau de fonctionner correctement même en présence de nœuds défaillants, malveillants.
-3. **Décentralisation :** Évitant ainsi la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation.
+2. **Résistance aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de nœuds défaillants ou malveillants.
+3. **Décentralisation :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
 4. **Sécurité :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
-En effet, il est **très important** de savoir quand une transaction est arrivée en premier par rapport à une autre, sinon il y a le risque de **double dépense**.
+La **sychronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient corrects sont essentiels, sinon il y a un risque de **double dépense**.
 
-Il existe plusieurs manière de faire...
+Il existe plusieurs manière de faire. En voici trois parmis les plus importants ou usités.
+1. La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
+2. La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
+3. La **preuve d'historique** (*proof of history*) présente sur **Solana**.
 
 
 ## ⚒️ Proof of Work (PoW)
