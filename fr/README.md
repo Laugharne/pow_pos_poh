@@ -16,6 +16,8 @@
 
 Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce malgré la possible présence de nœuds **défaillants** ou **malveillants**.
 
+**liste chainée... expliquer mieux**
+
 Les rôles des algorithmes de consensus sont les suivants :
 1. **Accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
 2. **Résistance aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de nœuds défaillants ou malveillants.
@@ -33,15 +35,26 @@ Il existe plusieurs manière de faire. En voici trois parmis les plus importante
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un puzzle  mathématique qui dépend du contenu du bloc et de son précédent.
+La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent.
 
-Le premier nœud à résoudre correctement est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins proportionnel au temps mis.
+Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire si quelqu’un va arriver en premier.
 
-Notez qu’il n’y a pas de limite de nombre de participants car
-nul ne peut dire si quelqu’un va arriver en premier.
+À cela s'ajoute la notion de **difficulté** de calcul qui consiste (entre autre...) en un nombre variable de zéros à obtenir en début de résultat de hash, après usage d'un nonce dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
+
+- https://www.quora.com/Why-do-bitcoin-hashes-need-to-start-with-17-zeroes
+- https://bitcoin.stackexchange.com/questions/85896/mining-difficulty-and-leading-zeros
+
+Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
+
+
+Initialement, la récompense était de 50 bitcoins par bloc, mais cela est réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
+
+![](2024-01-11-17-38-19.png)
+
+Au prochain halving qui aura lieu **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
 ![](assets/pow_diagram.png)
-
+(*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
 
 **Version simplifiée du minage (PoW) en Rust :**
 ```rust
@@ -66,7 +79,7 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques beaucoup moins intensifs.
 
-Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc.
+Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit pénalisé en cas de malveillance (*redistribution aux validateurs honnêtes*).
 
 L'idée fondamentale est que les individus/entités qui ont un intérêt financier dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
 
@@ -127,6 +140,9 @@ N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**fu
   - 🇬🇧 ["Bitcoin: A Peer-to-Peer Electronic Cash System"](https://bitcoin.org/bitcoin.pdf)
   - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/blockchain)
   - 🇬🇧 [What is Proof of Work? (Cryptocurrency Explanation) - YouTube](https://www.youtube.com/watch?v=XLcWy1uV8YM)
+  - 🇬🇧 [Blockchain.com | Charts - Network Difficulty](https://www.blockchain.com/explorer/charts/difficulty)
+  - 🇬🇧 [Next Bitcoin Halving 2024 Date & Countdown [BTC Clock]](https://buybitcoinworldwide.com/halving/)
+
 
 - **PoS :**
   - 🇫🇷 [Proof of work / Proof of Stake : C'est quoi la différence ? - YouTube](https://www.youtube.com/watch?v=dEGcAXeQsns)
