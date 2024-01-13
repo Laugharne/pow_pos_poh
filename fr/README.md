@@ -35,11 +35,11 @@ Il existe plusieurs manière de faire. En voici trois parmis les plus importante
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent.
+La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire si quelqu’un va arriver en premier.
 
-À cela s'ajoute la notion de **difficulté** de calcul qui consiste (entre autre...) en un nombre variable de zéros à obtenir en début de résultat de hash, après usage d'un nonce dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
+À cela s'ajoute la notion de **difficulté** de calcul qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) après usage d'un nonce dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
 
 - https://www.quora.com/Why-do-bitcoin-hashes-need-to-start-with-17-zeroes
 - https://bitcoin.stackexchange.com/questions/85896/mining-difficulty-and-leading-zeros
@@ -52,11 +52,8 @@ Initialement, la récompense était de 50 bitcoins par bloc, mais cela est rédu
 Au prochain halving qui aura lieu **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
 ![](2024-01-11-17-38-19.png)
+
 (*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
-
-
-![](assets/pow_diagram.png)
-
 
 
 **Version simplifiée du minage (PoW) en Rust :**
@@ -85,10 +82,9 @@ La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilis
 
 Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit pénalisé en cas de malveillance (*redistribution aux validateurs honnêtes*).
 
-L'idée fondamentale est que les individus/entités qui ont un intérêt financier dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
+Le choix des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté au sens de la recherche de *leading zeros* n'est pas applicable dans le contexte de ce consensus.
 
-![](assets/pos_diagram.png)
-
+L'idée fondamentale étant que les individus/entités qui ont un **intérêt financier** dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
 
 
 **Version simplifiée de création de bloc (PoS) en Rust :**
