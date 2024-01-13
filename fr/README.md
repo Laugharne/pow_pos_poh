@@ -49,14 +49,18 @@ Le premier nœud à résoudre correctement le calcul est récompensé par un cer
 
 Initialement, la récompense était de 50 bitcoins par bloc, mais cela est réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
-![](2024-01-11-17-38-19.png)
-
 Au prochain halving qui aura lieu **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
-![](assets/pow_diagram.png)
+![](2024-01-11-17-38-19.png)
 (*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
 
+
+![](assets/pow_diagram.png)
+
+
+
 **Version simplifiée du minage (PoW) en Rust :**
+
 ```rust
 fn mining_block(previous_block_hash: String, current_transactions: &Block, difficulty: usize) -> (String, u32) {
 	let prefix: String = "00".repeat(difficulty);
@@ -88,6 +92,7 @@ L'idée fondamentale est que les individus/entités qui ont un intérêt financi
 
 
 **Version simplifiée de création de bloc (PoS) en Rust :**
+
 ```rust
 fn creation_block(previous_block_hash: String, current_transactions: &Block) -> String {
 	let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
