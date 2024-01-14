@@ -3,7 +3,7 @@
 
 # PoW ; PoS ; PoH
 
-> **AVERTISSEMENT :** Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions très simplifiées des algorithmes de consensus pour en illustrer le fonctionnement.
+> **AVERTISSEMENT :** Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions **très simplifiées** des algorithmes de consensus, juste pour en illustrer le fonctionnement.
 
 
 ## TL;DR
@@ -24,7 +24,7 @@ Les rôles des algorithmes de consensus sont les suivants :
 
 La **synchronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient correctes sont essentielles, sinon il y a un risque de **double dépense**.
 
-Il existe plusieurs manières de faire. En voici trois parmi les plus importantes ou usitées.
+Il existe bien des manières de faire. En voici trois parmi les plus importantes ou usitées.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
 - La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
 - La **preuve d'historique** (*proof of history*) présente sur **Solana**.
@@ -37,7 +37,7 @@ La preuve de travail est la première méthode de consensus utilisée dans **Bit
 
 Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire si quelqu’un va arriver en premier.
 
-À cela s'ajoute la notion de **difficulté** de calcul qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) après usage d'un nonce dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
+À cela s'ajoute la notion de **difficulté** de calcul qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec usage d'un *nonce* dans des itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
@@ -46,7 +46,7 @@ Initialement, la récompense était de 50 bitcoins par bloc, mais cela est rédu
 Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
 
-![](2024-01-11-17-38-19.png)
+![](assets/difficulty.png)
 
 (*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
 
@@ -108,7 +108,38 @@ La PoS ajoute un registre d'historique des transactions et des blocs à chaque n
 
 En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bitcoin.pdf)** (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
 
-Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
+> Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
+
+Comme dit dans l'introduction, la synchronicité des... **BLABLABLA**
+
+Par exemple chez Google, il est utilisé une horloge atomique afin de maintenir une unicité de temps entre tous ses services. Les blockchains n'utilisents pas ce genre de solution externe pour résoudre leur problème d'unicité de temps.
+
+L'horodatage est directement encodé dans les messages de transaction.
+
+
+(horodaté, associer une valeur temporelle à un évenement)
+
+La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
+
+
+Le PoH utilise une technique appelée "tick-counting" pour mesurer le temps. Chaque tick correspond à une petite quantité de temps réelle, mais il y a beaucoup plus de ticks par seconde que de secondes par tick. Les ticks sont utilisés pour incrémenter un compteur qui mesure le nombre de ticks passés depuis le début de l'univers. Ceci permet de générer une valeur unique pour chaque transaction, même s'ils ont lieu presque exactement au même moment.
+
+
+Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur ordonnance relative. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
+
+Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
+
+...
+
+Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouvelle transaction et ajoute cette valeur au hash du message de transaction. Cela permet de s'assurer que toutes les transactions sont ordonnées par rapport aux autres. La preuve d'historique est donc fournie par ce tick() qui est incorporé dans chaque message de transaction. On peut imaginer qu'il y ait un "ticker" central qui génère un nombre unique à chaque appel de `tick()`. Les utilisateurs peuvent alors ajouter ce numéro à leur message de transaction. Le nœud qui valide la transaction vérifie si le numéro est supérieur ou égal au précédent. Si c'est le cas, il accepte la transaction. Sinon, il rejette la transaction et attend jusqu'à ce que le ticker change.
+
+...
+
+**Version simplifiée de création de bloc (PoH) en Rust :**
+
+```rust
+// TODO
+```
 
 
 
