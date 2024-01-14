@@ -73,14 +73,14 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 }
 ```
 
-Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû calculer **370894 hashs** au total, avant de les valider tous.
+Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû procéder à **370894 calculs de hashs** avant de les valider tous.
 
 
 ## 💰 Proof of Stake (PoS)
 
 La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques beaucoup moins intensifs.
 
-Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit pénalisé en cas de malveillance (*redistribution aux validateurs honnêtes*).
+Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisé en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
 Le choix des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté au sens de la recherche de *leading zeros* n'est pas applicable dans le contexte de ce consensus.
 
@@ -97,19 +97,18 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 }
 ```
 
-Sur la courte séquence de **5 blocs** de ma simulation, il n'a fallu calculer que **5 hashs** pour les valider tous.
+Sur la même séquence de **5 blocs** que précédement, il n'a fallu calculer que **5 hashs** pour les valider tous.
 
 
 ## 📜 Proof of History (PoH)
 
 La preuve d'historique est utilisée par **Solana**. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation de **toutes ses suivantes**.
-  
+
 En prenant un exemple simple, imaginez une **chaîne de montagnes** : pour en atteindre la fin, il faut d'abord gravir le premier sommet, puis le suivant, etc., jusqu'à atteindre le sommet final. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
 La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
-
-En 2008, **Satoshi Nakamoto**, dans son ["White paper"](https://bitcoin.org/bitcoin.pdf) (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
+En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bitcoin.pdf)** (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
 
 Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
 
@@ -124,7 +123,7 @@ Crédits : **[Franck Maussand](mailto:franck@maussand.net)**
 
 *Merci à [**Igor Bournazel**](https://github.com/ibourn) pour ses suggestions et la relecture de cet article.*
 
-N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**function dispatcher des EVM**](https://medium.com/@franck.maussand/optimisation-sur-ethereum-faites-la-diff%C3%A9rence-avec-les-noms-de-fonctions-ba4692c9e39f) !
+N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**function dispatcher des EVM**](https://medium.com/@franck.maussand/optimisation-sur-ethereum-faites-la-diff%C3%A9rence-avec-les-noms-de-fonctions-ba4692c9e39f) !
 
 --------
 
@@ -142,28 +141,31 @@ N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**fu
 - **PoW :**
   - 🇫🇷 [Bitcoin : un système de paiement électronique pair-à-pair](https://bitcoin.org/files/bitcoin-paper/bitcoin_fr.pdf)
   - 🇬🇧 ["Bitcoin: A Peer-to-Peer Electronic Cash System"](https://bitcoin.org/bitcoin.pdf)
-  - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/blockchain)
-  - 🇬🇧 [What is Proof of Work? (Cryptocurrency Explanation) - YouTube](https://www.youtube.com/watch?v=XLcWy1uV8YM)
+  - 🇬🇧 [Blockchain Demo - Blockchain](https://andersbrownworth.com/blockchain/blockchain)
+  - 🇬🇧 [What is Proof of Work? (Cryptocurrency Explanation)](https://www.youtube.com/watch?v=XLcWy1uV8YM)
   - 🇬🇧 [Blockchain.com | Charts - Network Difficulty](https://www.blockchain.com/explorer/charts/difficulty)
   - 🇬🇧 [Next Bitcoin Halving 2024 Date & Countdown [BTC Clock]](https://buybitcoinworldwide.com/halving/)
 
 
 - **PoS :**
-  - 🇫🇷 [Proof of work / Proof of Stake : C'est quoi la différence ? - YouTube](https://www.youtube.com/watch?v=dEGcAXeQsns)
-  - 🇬🇧 [Proof of History: A Clock for Blockchain](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
+  - 🇫🇷 [Proof of work / Proof of Stake : C'est quoi la différence ?](https://www.youtube.com/watch?v=dEGcAXeQsns)
+  - 🇬🇧 [Proof-of-stake (PoS) | ethereum.org](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/)
+  - 🇬🇧 [Proof-of-stake and security](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security)
   - 🇬🇧 [What is Proof of Stake & How Does Confirmation Work in PoS?](https://coindcx.com/blog/crypto-basics/what-is-proof-of-stake-pos/)
 
 
 - **PoH :**
   - 🇬🇧 [Solana: A new architecture for a high performance blockchain](https://solana.com/solana-whitepaper.pdf)
+  - 🇬🇧 [Proof of History: A Clock for Blockchain](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
   - 🇬🇧 [Proof of History: How Solana brings time to crypto | Solana](https://solana.com/news/proof-of-history)
   - 🇬🇧 [Break | Solana](https://break.solana.com/)
   - 🇬🇧 [Proof of History Explained by a Water Clock](https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8)
 
 
 - **VDF :**
-  - 🇬🇧 [Verifiable Delay Functions - YouTube](https://www.youtube.com/watch?v=_-feyaZZjEw)
   - 🇬🇧 [Timelock Puzzles Using VDFs](https://medium.com/mistywest/timelock-puzzles-using-vdfs-b5636503950d)
   - 🇬🇧 [Day 54: VDFs: Verifiable Delay Functions in Blockchain](https://gsoares-block.medium.com/day-54-vdfs-verifiable-delay-functions-in-blockchain-addb3d89a72b)
+  - 🇬🇧 [Verifiable Delay Functions](https://www.youtube.com/watch?v=_-feyaZZjEw)
+  - 🇬🇧 [Verifiable Delay Functions: Applications and Candidate Constructions - BPASE '18](https://www.youtube.com/watch?v=qUoagL7OZ1k)
 
 
