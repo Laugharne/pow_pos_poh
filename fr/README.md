@@ -71,7 +71,7 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 }
 ```
 
-Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû procéder à **370894 calculs de hashs** avant de les valider tous.
+> Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû procéder à **370894 calculs de hashs** avant de les valider tous.
 
 
 ## 💰 Proof of Stake (PoS)
@@ -95,7 +95,7 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 }
 ```
 
-Sur la même séquence de **5 blocs** que précédemment, il n'a fallu calculer que **5 hashs** pour les valider tous.
+> Sur la même séquence de **5 blocs** que précédemment, il n'a fallu calculer que **5 hashs** pour les valider tous.
 
 
 ## 📜 Proof of History (PoH)
