@@ -3,20 +3,18 @@
 
 # PoW ; PoS ; PoH
 
-> **AVERTISSEMENT** : Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions très simplifiées des algorithmes de consensus pour en illustrer le fonctionnement.
+> **AVERTISSEMENT :** Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions très simplifiées des algorithmes de consensus pour en illustrer le fonctionnement.
 
 
 ## TL;DR
 
-1. Le mécanisme de consensus est un procédé par lequel les noeuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
-2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique, et divers aspects du d'une blockchain.
+1. Le mécanisme de consensus est un procédé par lequel les nœuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
+2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
 
 
 ## Introduction
 
-Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce malgré la possible présence de nœuds **défaillants** ou **malveillants**.
-
-**liste chainée... expliquer mieux**
+Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
 
 Les rôles des algorithmes de consensus sont les suivants :
 1. **Accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
@@ -24,9 +22,9 @@ Les rôles des algorithmes de consensus sont les suivants :
 3. **Décentralisation :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
 4. **Sécurité :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
-La **sychronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient corrects sont essentiels, sinon il y a un risque de **double dépense**.
+La **synchronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient correctes sont essentielles, sinon il y a un risque de **double dépense**.
 
-Il existe plusieurs manière de faire. En voici trois parmis les plus importantes ou usitées.
+Il existe plusieurs manières de faire. En voici trois parmi les plus importantes ou usitées.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
 - La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
 - La **preuve d'historique** (*proof of history*) présente sur **Solana**.
@@ -97,7 +95,7 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 }
 ```
 
-Sur la même séquence de **5 blocs** que précédement, il n'a fallu calculer que **5 hashs** pour les valider tous.
+Sur la même séquence de **5 blocs** que précédemment, il n'a fallu calculer que **5 hashs** pour les valider tous.
 
 
 ## 📜 Proof of History (PoH)
