@@ -41,15 +41,12 @@ Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut di
 
 À cela s'ajoute la notion de **difficulté** de calcul qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) après usage d'un nonce dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
 
-- https://www.quora.com/Why-do-bitcoin-hashes-need-to-start-with-17-zeroes
-- https://bitcoin.stackexchange.com/questions/85896/mining-difficulty-and-leading-zeros
-
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
-
 
 Initialement, la récompense était de 50 bitcoins par bloc, mais cela est réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
-Au prochain halving qui aura lieu **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
+Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
+
 
 ![](2024-01-11-17-38-19.png)
 
@@ -76,6 +73,9 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 }
 ```
 
+Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû calculer **370894 hashs** au total, pour les valider tous.
+
+
 ## 💰 Proof of Stake (PoS)
 
 La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques beaucoup moins intensifs.
@@ -96,6 +96,8 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 	block_hash
 }
 ```
+
+Sur la courte séquence de **5 blocs** de ma simulation, il n'a fallu calculer que **5 hashs** pour les valider tous.
 
 
 ## 📜 Proof of History (PoH)
@@ -136,6 +138,7 @@ N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**fu
   - 🇬🇧 [SHA-3 - Wikipedia](https://en.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/hash)
 
+
 - **PoW :**
   - 🇫🇷 [Bitcoin : un système de paiement électronique pair-à-pair](https://bitcoin.org/files/bitcoin-paper/bitcoin_fr.pdf)
   - 🇬🇧 ["Bitcoin: A Peer-to-Peer Electronic Cash System"](https://bitcoin.org/bitcoin.pdf)
@@ -150,11 +153,13 @@ N'hésitez pas à jeter un coup d'oeiul sur mon précédent article sur le [**fu
   - 🇬🇧 [Proof of History: A Clock for Blockchain](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
   - 🇬🇧 [What is Proof of Stake & How Does Confirmation Work in PoS?](https://coindcx.com/blog/crypto-basics/what-is-proof-of-stake-pos/)
 
+
 - **PoH :**
   - 🇬🇧 [Solana: A new architecture for a high performance blockchain](https://solana.com/solana-whitepaper.pdf)
   - 🇬🇧 [Proof of History: How Solana brings time to crypto | Solana](https://solana.com/news/proof-of-history)
   - 🇬🇧 [Break | Solana](https://break.solana.com/)
   - 🇬🇧 [Proof of History Explained by a Water Clock](https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8)
+
 
 - **VDF :**
   - 🇬🇧 [Verifiable Delay Functions - YouTube](https://www.youtube.com/watch?v=_-feyaZZjEw)
