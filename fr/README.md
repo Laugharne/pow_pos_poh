@@ -57,23 +57,23 @@ Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024*
 
 ```rust
 fn mining_block(previous_block_hash: String, current_transactions: &Block, difficulty: usize) -> (String, u32) {
-	let prefix: String = "00".repeat(difficulty);
-	let mut nonce: u32 = 0;
+  let prefix: String = "00".repeat(difficulty);
+  let mut nonce: u32 = 0;
 
-	loop {
-		let to_hash: String    = format!("{}{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data, nonce);
-		let block_hash: String = digest(to_hash);
-		
-		if block_hash.starts_with(&prefix) {
-			return (block_hash, nonce);
-		} else {
-			nonce += 1;
-		}
-	}
+  loop {
+    let to_hash: String    = format!("{}{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data, nonce);
+    let block_hash: String = digest(to_hash);
+    
+    if block_hash.starts_with(&prefix) {
+      return (block_hash, nonce);
+    } else {
+      nonce += 1;
+    }
+  }
 }
 ```
 
-Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû calculer **370894 hashs** au total, pour les valider tous.
+Sur une courte séquence de **5 blocs**, ma simulation de calcul a dû calculer **370894 hashs** au total, avant de les valider tous.
 
 
 ## 💰 Proof of Stake (PoS)
@@ -91,9 +91,9 @@ L'idée fondamentale étant que les individus/entités qui ont un **intérêt fi
 
 ```rust
 fn creation_block(previous_block_hash: String, current_transactions: &Block) -> String {
-	let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
-	let block_hash: String = digest(to_hash);
-	block_hash
+  let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
+  let block_hash: String = digest(to_hash);
+  block_hash
 }
 ```
 
