@@ -39,7 +39,7 @@ Il existe bien des manières de faire. En voici trois parmi les plus importantes
 La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
-## La difficulté de calcul
+### La difficulté de calcul
 
 Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
 
@@ -115,7 +115,7 @@ En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bi
 
 Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchain or celles-ci n'utilisent pas de solution centralisée comme une horloge atomique, pour résoudre leur problème d'unicité de temps.
 
-La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des évenements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation de **toutes ses suivantes**.
+La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des évenements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
 
 Horloge avant consensus (Clock before consensus)
 - La PoH mécanisme qui perment de prouver l'écoulement du temps entre deux évenements
@@ -123,19 +123,22 @@ Horloge avant consensus (Clock before consensus)
 - Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage
 - Dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
 - Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
-@09:48
 
 En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
-
-@10:20
 ### Comment valider ce passage du temps numérique ?
 
-Toujours en reprenant la métaphore des escaliers, on ne peux monté sur une marche que si on a monté la précédente
-- Imaginons un hash à chaque marche (ou étape)
+Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (ou étape)
+- Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel.
+- On ne peux monté sur une marche que si on a monté la précédente.
+- On ne peux avoir une valeur de sortie donnée (marche courante) qu'avec une seule valeur d'entrée (marche précédente)
 
 La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
+La fonction utilisé pour créer ce registre est appelée **(High Frequency) Verifiable Delay Function** ou **VDF**.
+
+@11:30
+### Verifiable Delay Function (VDF)
 
 L'horodatage est directement encodé dans les messages de transaction.
 
