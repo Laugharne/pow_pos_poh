@@ -10,6 +10,9 @@
 
 1. Le mécanisme de consensus est un procédé par lequel les nœuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
 2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
+3. L'horodatage est un mécanisme qui permet d'associer une valeur temporelle à un évenement.
+4. La PoH n'est pas un algorithme de consensus, mais une horloge avant consensus.
+
 
 
 ## Introduction
@@ -22,7 +25,7 @@ Les rôles des algorithmes de consensus sont les suivants :
 3. **Décentralisation :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
 4. **Sécurité :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
-La **synchronicité** et l'**unicité** en sont deux éléments très importants. En effet, savoir quand une transaction est arrivée en premier par rapport à une autre, de même que la garantie que les balances de comptes soient correctes sont essentielles, sinon il y a un risque de **double dépense**.
+Le **solde** et l'**état** du réseau doivent être **synchronisés** sur la majorité des nœuds pour éviter les problèmes de **double dépense**.
 
 Il existe bien des manières de faire. En voici trois parmi les plus importantes ou usitées.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
@@ -114,10 +117,18 @@ Comme dit dans l'introduction, la synchronicité des... **BLABLABLA**
 
 Par exemple chez Google, il est utilisé une horloge atomique afin de maintenir une unicité de temps entre tous ses services. Les blockchains n'utilisents pas ce genre de solution externe pour résoudre leur problème d'unicité de temps.
 
+Horloge avant consensus (Clock before consensus)
+- La PoH mécanisme qui perment de prouver l'écoulement du temps entre deux évenements
+- Fonction de hachage séquentiel
+- Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage
+- Dès qu'un évenemet arrive, il est impossible de placer les choses se produisant après, avant celui ci
+- Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
+@09:48
+
+
 L'horodatage est directement encodé dans les messages de transaction.
 
 
-(horodaté, associer une valeur temporelle à un évenement)
 
 
 La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
@@ -128,7 +139,6 @@ Le PoH utilise une technique appelée "tick-counting" pour mesurer le temps. Cha
 
 Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur ordonnance relative. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
 
-Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
 
 ...
 
@@ -141,6 +151,11 @@ Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouve
 ```rust
 // TODO
 ```
+
+
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU.
+
+
 
 La Proof of History en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **["l’attaque Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
@@ -160,21 +175,21 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 
 ## Ressources additionnelles
 
-- **Attaques :**
-  - 🇫🇷 [Attaque des 51 %](https://fr.wikipedia.org/wiki/Attaque_des_51_%25)
-  - 🇫🇷 [Attaque Sybil](https://fr.wikipedia.org/wiki/Attaque_Sybil)
-  - 🇫🇷 [Qu’est-ce qu’une attaque Sybil (Sybil attack) ?](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)
-  - 🇫🇷 [Qu’est-ce qu’une attaque 51% et quelles sont ses conséquences ?](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)
-  - 🇬🇧 [Double-spending > 51% attack](https://en.wikipedia.org/wiki/Double-spending#51%_attack)
-  - 🇬🇧 [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack)
-
-
 - **Hash :**
   - 🇫🇷 [Fonction de hachage — Wikipédia](https://fr.wikipedia.org/wiki/Fonction_de_hachage)
   - 🇬🇧 [Hash function - Wikipedia](https://en.wikipedia.org/wiki/Hash_function)
   - 🇫🇷 [SHA-3 — Wikipédia](https://fr.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [SHA-3 - Wikipedia](https://en.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/hash)
+
+
+- **Attaques :**
+  - 🇫🇷 [Attaque des 51 %](https://fr.wikipedia.org/wiki/Attaque_des_51_%25)
+  - 🇫🇷 [Attaque Sybil](https://fr.wikipedia.org/wiki/Attaque_Sybil)
+  - 🇫🇷 [Qu’est-ce qu’une attaque Sybil (Sybil attack) ?](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)
+  - 🇫🇷 [Qu’est-ce qu’une attaque 51% et quelles sont ses conséquences ?](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)
+  - 🇬🇧 [Double-spending — 51% attack](https://en.wikipedia.org/wiki/Double-spending#51%_attack)
+  - 🇬🇧 [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack)
 
 
 - **PoW :**
@@ -195,10 +210,10 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 
 
 - **PoH :**
-  - 🇬🇧 [Solana: A new architecture for a high performance blockchain](https://solana.com/solana-whitepaper.pdf)
-  - 🇬🇧 [Proof of History: A Clock for Blockchain](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
   - 🇬🇧 [Proof of History: How Solana brings time to crypto | Solana](https://solana.com/news/proof-of-history)
+  - 🇬🇧 [Solana: A new architecture for a high performance blockchain](https://solana.com/solana-whitepaper.pdf)
   - 🇬🇧 [Break | Solana](https://break.solana.com/)
+  - 🇬🇧 [Proof of History: A Clock for Blockchain by Anatoly Yakovenko](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
   - 🇬🇧 [Proof of History Explained by a Water Clock](https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8)
 
 
