@@ -140,6 +140,8 @@ La fonction utilisé pour créer ce registre est appelée **(High Frequency) Ver
 - Impossible de prédire le résultat sans l'exécuter.
 - Permet de placer un évenement avant ou après un autre.
 
+----
+
 - exécuté en boucle
 - génére un hash (sha256) en sortie
 - à chaque tour de fonction le hash de sortie est réutilisé en entrée
@@ -147,7 +149,7 @@ La fonction utilisé pour créer ce registre est appelée **(High Frequency) Ver
 - le hash est "pre image resistant", à partir de la valeur de sortie, il est impossible de déduire la valeur d'entrée
 - l'éxécution est atomique et non parallèlisable sur un seul core de CPU
 - parametré de manière à avoir une vitesse d'exécution homogène d'un node à un autre (configuration hardware spécifique) se protégeant ainsi des calculs fait par des ASICS
-- garantissant un minimum de garantie que le décompte du temps
+- assurant un minimum de garantie sur le décompte du temps
 - le hash des données (transactions) leur hash est ajouté au dernier état généré, l'état, les données ajoutées et le décompte publiés
 
 L'horodatage est directement encodé dans les messages de transaction.
