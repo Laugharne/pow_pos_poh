@@ -117,21 +117,16 @@ Comme dit dans l'introduction, la synchronicité des états est essentiel pour l
 
 La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des évenements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
 
-Horloge avant consensus (Clock before consensus)
-- La PoH mécanisme qui perment de prouver l'écoulement du temps entre deux évenements
-- Fonction de hachage séquentiel
-- Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage
-- Dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
-- Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
+La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui perment de prouver l'écoulement du temps entre deux évenements. Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage, dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
+
+> Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
 
 En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
 ### Comment valider ce passage du temps numérique ?
 
 Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (ou étape)
-- Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel.
-- On ne peux monté sur une marche que si on a monté la précédente.
-- On ne peux avoir une valeur de sortie donnée (marche courante) qu'avec une seule valeur d'entrée (marche précédente)
+Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel; on ne peux monté sur une marche que si on a monté la précédente. On ne peux donc avoir qu'une valeur de sortie donnée (marche courante) pour une valeur d'entrée (la marche précédente).
 
 La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
@@ -140,9 +135,24 @@ La fonction utilisé pour créer ce registre est appelée **(High Frequency) Ver
 @11:30
 ### Verifiable Delay Function (VDF)
 
+- Elle fourni une réultat unique et vérifiable.
+- Haute fréquence car exécuté plusieurs milliers de fois par seconde.
+- Impossible de prédire le résultat sans l'exécuter.
+- Permet de placer un évenement avant ou après un autre.
+
+- exécuté en boucle
+- génére un hash (sha256) en sortie
+- à chaque tour de fonction le hash de sortie est réutilisé en entrée
+- de manière périodique le résultat de sortie va être assorti à un nombre qui est le décompte (count)
+- le hash est "pre image resistant", à partir de la valeur de sortie, il est impossible de déduire la valeur d'entrée
+- l'éxécution est atomique et non parallèlisable sur un seul core de CPU
+- parametré de manière à avoir une vitesse d'exécution homogène d'un node à un autre (configuration hardware spécifique) se protégeant ainsi des calculs fait par des ASICS
+- garantissant un minimum de garantie que le décompte du temps
+- le hash des données (transactions) leur hash est ajouté au dernier état généré, l'état, les données ajoutées et le décompte publiés
+
 L'horodatage est directement encodé dans les messages de transaction.
 
-
+@14:55
 
 
 La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
