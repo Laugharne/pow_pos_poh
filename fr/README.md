@@ -119,7 +119,7 @@ La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé
 
 La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui perment de prouver l'écoulement du temps entre deux évenements. Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage, dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
 
-> Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
+> **Preuve d'ordonancement** pourrait aussi être un terme utilisable pour la PoH.
 
 En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
@@ -135,10 +135,9 @@ La fonction utilisé pour créer ce registre est appelée **(High Frequency) Ver
 @11:30
 ### Verifiable Delay Function (VDF)
 
-- Elle fourni une réultat unique et vérifiable.
-- Haute fréquence car exécuté plusieurs milliers de fois par seconde.
-- Impossible de prédire le résultat sans l'exécuter.
-- Permet de placer un évenement avant ou après un autre.
+Le VDF génère un résultat unique et vérifiable, renforcé par une exécution à haute fréquence, opérant plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
+
+Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, que ce soit avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
 ----
 
