@@ -217,6 +217,8 @@ fn main() {
 
 Veuillez noter que cet exemple utilise une bibliothèque externe pour le hash SHA256, donc vous devrez ajouter la dépendance appropriée à votre projet. Vous pouvez remplacer "Transaction Data" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
 
+Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il peut être déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
+
 --------
 
 La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
