@@ -153,6 +153,12 @@ Cette fonctionnalité trouve son utilité dans la capacité à placer un événe
 
 L'horodatage est directement encodé dans les messages de transaction.
 
+
+
+Le processus fonctionne en boucle, générant un hash (SHA256) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (count). Il est crucial de noter que le hash est "pre-image resistant", ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
+
+L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de CPU, et est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des ASICs. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+
 @14:55
 
 
