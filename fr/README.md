@@ -161,6 +161,63 @@ L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur d
 
 @14:55
 
+--------
+
+Voici un exemple de code simplifié en Rust qui illustre un mécanisme de Verifiable Delay Function (VDF) :
+
+```rust
+use crypto::digest::Digest;
+use crypto::sha2::Sha256;
+
+struct VDFState {
+    hash: String,
+    count: u64,
+}
+
+impl VDFState {
+    fn new() -> VDFState {
+        VDFState {
+            hash: String::new(),
+            count: 0,
+        }
+    }
+
+    fn execute_vdf(&mut self, data: &str) {
+        let mut hasher = Sha256::new();
+        hasher.input_str(&format!("{}{}", self.hash, data));
+        self.hash = hasher.result_str();
+        self.count += 1;
+
+        // Periodically check for the desired output
+        if self.count % PERIOD == 0 {
+            self.check_output();
+        }
+    }
+
+    fn check_output(&self) {
+        // Perform additional checks on the current state, e.g., matching the output
+        // with a predefined target or criteria.
+        // Publish the hash, count, and other relevant data.
+        println!("Hash: {}, Count: {}", self.hash, self.count);
+    }
+}
+
+const PERIOD: u64 = 1000;
+
+fn main() {
+    let mut vdf_state = VDFState::new();
+
+    // Simulate executing VDF in a loop with new data (transactions).
+    for _ in 0..10000 {
+        let transaction_data = "Transaction Data"; // Replace with actual transaction data
+        vdf_state.execute_vdf(transaction_data);
+    }
+}
+```
+
+Veuillez noter que cet exemple utilise une bibliothèque externe pour le hash SHA256, donc vous devrez ajouter la dépendance appropriée à votre projet. Vous pouvez remplacer "Transaction Data" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
+
+--------
 
 La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
 
