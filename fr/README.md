@@ -38,7 +38,10 @@ Il existe bien des manières de faire. En voici trois parmi les plus importantes
 
 La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
-Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec usage d'un *nonce* dans des itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
+
+## La difficulté de calcul
+
+Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
@@ -85,6 +88,9 @@ Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fo
 
 Le choix des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté de recherche de *leading zeros* n'a pas de sens avec ce consensus.
 
+
+### La carotte et le baton
+
 L'idée fondamentale étant que les individus/entités qui ont un **intérêt financier** dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
 
 
@@ -103,27 +109,32 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 
 ## 📜 Proof of History (PoH)
 
-La preuve d'historique est un mécanisme utilisé par **Solana** en combinaisonde la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation de **toutes ses suivantes**.
-
-En prenant un exemple simple, imaginez une **chaîne de montagnes** : pour en atteindre la fin, il faut d'abord gravir le premier sommet, puis le suivant, etc., jusqu'à atteindre le sommet final. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
-
-La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
-
 En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bitcoin.pdf)** (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
 
 > Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
 
-Comme dit dans l'introduction, la synchronicité des... **BLABLABLA**
+Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchain or celles-ci n'utilisent pas de solution centralisée comme une horloge atomique, pour résoudre leur problème d'unicité de temps.
 
-Par exemple chez Google, il est utilisé une horloge atomique afin de maintenir une unicité de temps entre tous ses services. Les blockchains n'utilisents pas ce genre de solution externe pour résoudre leur problème d'unicité de temps.
+La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des évenements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation de **toutes ses suivantes**.
 
 Horloge avant consensus (Clock before consensus)
 - La PoH mécanisme qui perment de prouver l'écoulement du temps entre deux évenements
 - Fonction de hachage séquentiel
 - Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage
-- Dès qu'un évenemet arrive, il est impossible de placer les choses se produisant après, avant celui ci
+- Dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
 - Preuve d'ordonancement pourrait aussi être un terme utilisable pour la PoH.
 @09:48
+
+En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
+
+
+@10:20
+### Comment valider ce passage du temps numérique ?
+
+Toujours en reprenant la métaphore des escaliers, on ne peux monté sur une marche que si on a monté la précédente
+- Imaginons un hash à chaque marche (ou étape)
+
+La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
 
 L'horodatage est directement encodé dans les messages de transaction.
