@@ -152,35 +152,35 @@ L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur d
 use sha256::digest;
 
 struct VDFState {
-	hash : String,
-	count: u64,
+    hash : String,
+    count: u64,
 }
 
 impl VDFState {
 
-	fn new() -> VDFState {
-		VDFState {
-			hash : String::new(),
-			count: 0,
-		}
-	}
+    fn new() -> VDFState {
+        VDFState {
+            hash : String::new(),
+            count: 0,
+        }
+    }
 
-	fn execute(&mut self, data: &str) {
-		self.hash   = digest(format!("{}{}", self.hash, data));
-		self.count += 1;
+    fn execute(&mut self, data: &str) {
+        self.hash   = digest(format!("{}{}", self.hash, data));
+        self.count += 1;
 
-		// Periodically check for the desired output
-		if self.count % PERIOD == 0 {
-			self.get_state();
-		}
-	}
+        // Periodically check for the desired output
+        if self.count % PERIOD == 0 {
+            self.get_state();
+        }
+    }
 
-	fn get_state(&self) {
-		// Perform additional checks on the current state.
-		// e.g., matching the output with a predefined target or criteria.
-		// Publish the hash, count, and other relevant data.
-		println!("Hash: {}, Count: {}", self.hash, self.count);
-	}
+    fn get_state(&self) {
+        // Perform additional checks on the current state.
+        // e.g., matching the output with a predefined target or criteria.
+        // Publish the hash, count, and other relevant data.
+        println!("Hash: {}, Count: {}", self.hash, self.count);
+    }
 
 }
 
@@ -188,13 +188,13 @@ const PERIOD: u64 = 1000;
 
 
 fn main() {
-	let mut vdf = VDFState::new();
+    let mut vdf = VDFState::new();
 
-	// Simulate executing VDF in a loop with new data (transactions).
-	for _ in 0..10000 {
-		let transaction_data = "Transaction Data"; // Replace with actual transaction data
-		vdf.execute(transaction_data);
-	}
+    // Simulate executing VDF in a loop with new data (transactions).
+    for _ in 0..10000 {
+        let transaction_data = "Transaction Data"; // Replace with actual transaction data
+        vdf.execute(transaction_data);
+    }
 
 }
 ```
