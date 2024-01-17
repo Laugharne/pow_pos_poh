@@ -82,7 +82,7 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
-La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques beaucoup moins intensifs.
+La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
 Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
@@ -134,7 +134,6 @@ La PoS ajoute un registre d'historique des transactions et des blocs à chaque n
 La fonction utilisé pour créer ce registre est appelée **(High Frequency) Verifiable Delay Function** ou **VDF**.
 
 
-@11:30
 ### Verifiable Delay Function (VDF) ⏲️
 
 Le VDF génère un résultat unique et vérifiable, de par son exécution permanante, opérant plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
@@ -144,6 +143,8 @@ Cette fonctionnalité trouve son utilité dans la capacité à placer un événe
 Le processus fonctionne en boucle, générant un hash (SHA256) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (count). Il est crucial de noter que le hash est  ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
 
 L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de CPU. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des ASICs. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+
+Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
 
 
 **Voici un exemple de code simplifié en Rust qui illustre un mécanisme de Verifiable Delay Function (VDF) :**
@@ -212,27 +213,15 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre sy
 
 --------
 
-La chaîne de blocs peut être construite à partir d'un ensemble de transactions horodatée. Cela signifie que chaque message de transaction contient une information sur son temps et qu'il est possible de déterminer si un message a été ajouté avant ou après un autre message. Cela permet également de vérifier que toutes les transactions sont bien ordonnées chronologiquement.
-
-
-Le PoH utilise une technique appelée "tick-counting" pour mesurer le temps. Chaque tick correspond à une petite quantité de temps réelle, mais il y a beaucoup plus de ticks par seconde que de secondes par tick. Les ticks sont utilisés pour incrémenter un compteur qui mesure le nombre de ticks passés depuis le début de l'univers. Ceci permet de générer une valeur unique pour chaque transaction, même s'ils ont lieu presque exactement au même moment.
 
 
 
-...
+### Validations en parallèles 🚀 
 
-Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouvelle transaction et ajoute cette valeur au hash du message de transaction. Cela permet de s'assurer que toutes les transactions sont ordonnées par rapport aux autres. La preuve d'historique est donc fournie par ce tick() qui est incorporé dans chaque message de transaction. On peut imaginer qu'il y ait un "ticker" central qui génère un nombre unique à chaque appel de `tick()`. Les utilisateurs peuvent alors ajouter ce numéro à leur message de transaction. Le nœud qui valide la transaction vérifie si le numéro est supérieur ou égal au précédent. Si c'est le cas, il accepte la transaction. Sinon, il rejette la transaction et attend jusqu'à ce que le ticker change.
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (ou GPU).
 
-...
+Les nœuds peuvent fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
 
-
-
-Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
-
-
-
-
-### Parallélisation 🚀 
 
 **Version simplifiée de la création de bloc (PoH) en Rust :**
 
@@ -240,8 +229,6 @@ Il est important de noter que le PoH ne garantit pas la chronologie absolue des 
 // TODO
 ```
 
-
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU.
 
 
 
