@@ -123,6 +123,7 @@ La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qu
 
 En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
+
 ### Comment valider ce passage du temps numérique ?
 
 Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (ou étape)
@@ -132,92 +133,82 @@ La PoS ajoute un registre d'historique des transactions et des blocs à chaque n
 
 La fonction utilisé pour créer ce registre est appelée **(High Frequency) Verifiable Delay Function** ou **VDF**.
 
+
 @11:30
-### Verifiable Delay Function (VDF)
+### Verifiable Delay Function (VDF) ⏲️
 
-Le VDF génère un résultat unique et vérifiable, renforcé par une exécution à haute fréquence, opérant plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
+Le VDF génère un résultat unique et vérifiable, de par son exécution permanante, opérant plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
 
-Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, que ce soit avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
+Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
-----
+Le processus fonctionne en boucle, générant un hash (SHA256) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (count). Il est crucial de noter que le hash est  ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
 
-- exécuté en boucle
-- génére un hash (sha256) en sortie
-- à chaque tour de fonction le hash de sortie est réutilisé en entrée
-- de manière périodique le résultat de sortie va être assorti à un nombre qui est le décompte (count)
-- le hash est "pre image resistant", à partir de la valeur de sortie, il est impossible de déduire la valeur d'entrée
-- l'éxécution est atomique et non parallèlisable sur un seul core de CPU
-- parametré de manière à avoir une vitesse d'exécution homogène d'un node à un autre (configuration hardware spécifique) se protégeant ainsi des calculs fait par des ASICS
-- assurant un minimum de garantie sur le décompte du temps
-- le hash des données (transactions) leur hash est ajouté au dernier état généré, l'état, les données ajoutées et le décompte publiés
-
-L'horodatage est directement encodé dans les messages de transaction.
+L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de CPU. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des ASICs. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
 
-
-Le processus fonctionne en boucle, générant un hash (SHA256) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (count). Il est crucial de noter que le hash est "pre-image resistant", ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
-
-L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de CPU, et est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des ASICs. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
-
-@14:55
-
---------
-
-Voici un exemple de code simplifié en Rust qui illustre un mécanisme de Verifiable Delay Function (VDF) :
+**Voici un exemple de code simplifié en Rust qui illustre un mécanisme de Verifiable Delay Function (VDF) :**
 
 ```rust
-use crypto::digest::Digest;
-use crypto::sha2::Sha256;
+use sha256::digest;
 
 struct VDFState {
-    hash: String,
-    count: u64,
+	hash : String,
+	count: u64,
 }
 
 impl VDFState {
-    fn new() -> VDFState {
-        VDFState {
-            hash: String::new(),
-            count: 0,
-        }
-    }
 
-    fn execute_vdf(&mut self, data: &str) {
-        let mut hasher = Sha256::new();
-        hasher.input_str(&format!("{}{}", self.hash, data));
-        self.hash = hasher.result_str();
-        self.count += 1;
+	fn new() -> VDFState {
+		VDFState {
+			hash : String::new(),
+			count: 0,
+		}
+	}
 
-        // Periodically check for the desired output
-        if self.count % PERIOD == 0 {
-            self.check_output();
-        }
-    }
+	fn execute(&mut self, data: &str) {
+		self.hash   = digest(format!("{}{}", self.hash, data));
+		self.count += 1;
 
-    fn check_output(&self) {
-        // Perform additional checks on the current state, e.g., matching the output
-        // with a predefined target or criteria.
-        // Publish the hash, count, and other relevant data.
-        println!("Hash: {}, Count: {}", self.hash, self.count);
-    }
+		// Periodically check for the desired output
+		if self.count % PERIOD == 0 {
+			self.get_state();
+		}
+	}
+
+	fn get_state(&self) {
+		// Perform additional checks on the current state.
+		// e.g., matching the output with a predefined target or criteria.
+		// Publish the hash, count, and other relevant data.
+		println!("Hash: {}, Count: {}", self.hash, self.count);
+	}
+
 }
 
 const PERIOD: u64 = 1000;
 
-fn main() {
-    let mut vdf_state = VDFState::new();
 
-    // Simulate executing VDF in a loop with new data (transactions).
-    for _ in 0..10000 {
-        let transaction_data = "Transaction Data"; // Replace with actual transaction data
-        vdf_state.execute_vdf(transaction_data);
-    }
+fn main() {
+	let mut vdf = VDFState::new();
+
+	// Simulate executing VDF in a loop with new data (transactions).
+	for _ in 0..10000 {
+		let transaction_data = "Transaction Data"; // Replace with actual transaction data
+		vdf.execute(transaction_data);
+	}
+
 }
 ```
 
-Veuillez noter que cet exemple utilise une bibliothèque externe pour le hash SHA256, donc vous devrez ajouter la dépendance appropriée à votre projet. Vous pouvez remplacer "Transaction Data" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
+Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
 
-Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il peut être déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
+> ENCORE UNE FOIS, ce n'est qu'une **illustration simplifiée**.
+
+Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
+
+
+--------
+
+@14:55
 
 --------
 
@@ -236,7 +227,9 @@ Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouve
 
 ...
 
-**Version simplifiée de création de bloc (PoH) en Rust :**
+### Parallélisation 🚀 
+
+**Version simplifiée de la création de bloc (PoH) en Rust :**
 
 ```rust
 // TODO
@@ -280,6 +273,8 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇫🇷 [Qu’est-ce qu’une attaque 51% et quelles sont ses conséquences ?](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)
   - 🇬🇧 [Double-spending — 51% attack](https://en.wikipedia.org/wiki/Double-spending#51%_attack)
   - 🇬🇧 [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack)
+  - 🇫🇷 [Attaque de préimage — Wikipédia](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image)
+  - 🇬🇧 [Preimage attack - Wikipedia](https://en.wikipedia.org/wiki/Preimage_attack)
 
 
 - **PoW :**
