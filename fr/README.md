@@ -1,7 +1,8 @@
 ![](assets/pow_pos_poh.png)
 
 
-# PoW ; PoS ; PoH
+# PoW, PoS, PoH : Un guide simple des algorithmes de consensus blockchain
+
 
 > **AVERTISSEMENT :** Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions **très simplifiées** des algorithmes de consensus, juste pour en illustrer le fonctionnement.
 
@@ -20,12 +21,12 @@
 Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
 
 Les rôles des algorithmes de consensus sont les suivants :
-1. **Accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
-2. **Résistance aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de nœuds défaillants ou malveillants.
-3. **Décentralisation :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
-4. **Sécurité :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
+1. **Obtenir un accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
+2. **Résister aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de nœuds défaillants ou malveillants.
+3. **Décentraliser :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
+4. **Sécuriser :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
-Le **solde** et l'**état** du réseau doivent être **synchronisés** sur la majorité des nœuds pour éviter les problèmes de **double dépense**.
+Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur la majorité des nœuds pour éviter les problèmes de **double dépense**.
 
 Il existe bien des manières de faire. En voici trois parmi les plus importantes ou usitées.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
@@ -36,7 +37,7 @@ Il existe bien des manières de faire. En voici trois parmi les plus importantes
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la première méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme **SHA-256** utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
+La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
 ### La difficulté de calcul
@@ -52,7 +53,7 @@ Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se 
 Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
 
-![](assets/difficulty.png)
+![](assets/halving.png)
 
 (*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
 
@@ -61,7 +62,7 @@ Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024*
 
 ```rust
 fn mining_block(previous_block_hash: String, current_transactions: &Block, difficulty: usize) -> (String, u32) {
-    let prefix: String = "00".repeat(difficulty);
+    let prefix: String = "0".repeat(difficulty);
     let mut nonce: u32 = 0;
 
     loop {
@@ -82,7 +83,7 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
-La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par **Ethereum**. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
+La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par la blockchain **Ethereum** et utilise [SHA-3](https://fr.wikipedia.org/wiki/SHA-3#La_permutation_par_bloc_de_Keccak) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
 Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
@@ -119,15 +120,15 @@ La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé
 
 La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui perment de prouver l'écoulement du temps entre deux évenements. Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage, dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
 
-> **Preuve d'ordonancement** pourrait aussi être un terme utilisable pour la PoH.
+> **Preuve d'ordonancement** pourrait aussi être un terme valable pour la PoH.
 
-En prenant un exemple simple, imaginez une **escalier** : pour en atteindre la fin, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
+En prenant un exemple simple, imaginez une **escalier** : pour en atteindre le haut, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
 
 ### Comment valider ce passage du temps numérique ?
 
-Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (ou étape)
-Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel; on ne peux monté sur une marche que si on a monté la précédente. On ne peux donc avoir qu'une valeur de sortie donnée (marche courante) pour une valeur d'entrée (la marche précédente).
+Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (*ou étape*)
+Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel; on ne peux monté sur une marche que si on a monté la précédente. On ne peux donc avoir qu'une valeur de sortie donnée (*marche courante*) pour une valeur d'entrée (*la marche précédente*).
 
 La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
@@ -147,7 +148,7 @@ L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur d
 Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
 
 
-**Voici un exemple de code simplifié en Rust qui illustre un mécanisme de Verifiable Delay Function (VDF) :**
+**Voici un exemple de code simplifié en Rust qui illustre un mécanisme de "Verifiable Delay Function" (VDF) :**
 
 ```rust
 use sha256::digest;
@@ -177,7 +178,7 @@ impl VDFState {
     }
 
     fn get_state(&self) {
-        // Perform additional checks on the current state.
+        // Must perform additional checks on the current state.
         // e.g., matching the output with a predefined target or criteria.
         // Publish the hash, count, and other relevant data.
         println!("Hash: {}, Count: {}", self.hash, self.count);
@@ -202,40 +203,35 @@ fn main() {
 
 Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
 
-> ENCORE UNE FOIS, ce n'est qu'une **illustration simplifiée**.
+> **ENCORE UNE FOIS**, ce n'est qu'une **illustration simplifiée**.
 
 Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
 
 
---------
-
-@14:55
-
---------
 
 
+### Validations en parallèles 🚀
 
-
-### Validations en parallèles 🚀 
-
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (ou GPU).
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
 
 Les nœuds peuvent fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
 
 
-**Version simplifiée de la création de bloc (PoH) en Rust :**
+**Version simplifiée de la validation de bloc (PoH) en Rust :**
 
 ```rust
+
 // TODO
+
 ```
-
-
 
 
 La **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
 
 ## Conclusions
+
+**TO DO**
 
 
 --------
@@ -254,6 +250,8 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 - **Hash :**
   - 🇫🇷 [Fonction de hachage — Wikipédia](https://fr.wikipedia.org/wiki/Fonction_de_hachage)
   - 🇬🇧 [Hash function - Wikipedia](https://en.wikipedia.org/wiki/Hash_function)
+  - 🇫🇷 [SHA-2 — Wikipédia](https://fr.wikipedia.org/wiki/SHA-2#SHA-256)
+  - 🇬🇧 [SHA-2 - Wikipedia](https://en.wikipedia.org/wiki/SHA-2)
   - 🇫🇷 [SHA-3 — Wikipédia](https://fr.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [SHA-3 - Wikipedia](https://en.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/hash)
