@@ -45,7 +45,7 @@ Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Di
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
-Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire si quelqu’un va arriver en premier.
+Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire qui va arriver en premier.
 
 Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
@@ -218,14 +218,19 @@ La chaîne de blocs peut être construite à partir d'un ensemble de transaction
 Le PoH utilise une technique appelée "tick-counting" pour mesurer le temps. Chaque tick correspond à une petite quantité de temps réelle, mais il y a beaucoup plus de ticks par seconde que de secondes par tick. Les ticks sont utilisés pour incrémenter un compteur qui mesure le nombre de ticks passés depuis le début de l'univers. Ceci permet de générer une valeur unique pour chaque transaction, même s'ils ont lieu presque exactement au même moment.
 
 
-Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur ordonnance relative. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
-
 
 ...
 
 Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouvelle transaction et ajoute cette valeur au hash du message de transaction. Cela permet de s'assurer que toutes les transactions sont ordonnées par rapport aux autres. La preuve d'historique est donc fournie par ce tick() qui est incorporé dans chaque message de transaction. On peut imaginer qu'il y ait un "ticker" central qui génère un nombre unique à chaque appel de `tick()`. Les utilisateurs peuvent alors ajouter ce numéro à leur message de transaction. Le nœud qui valide la transaction vérifie si le numéro est supérieur ou égal au précédent. Si c'est le cas, il accepte la transaction. Sinon, il rejette la transaction et attend jusqu'à ce que le ticker change.
 
 ...
+
+
+
+Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
+
+
+
 
 ### Parallélisation 🚀 
 
@@ -240,7 +245,8 @@ Le PoH utilise une fonction `tick()` qui incrémente un compteur à chaque nouve
 
 
 
-La Proof of History en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **["l’attaque Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
+La **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
+
 
 ## Conclusions
 
