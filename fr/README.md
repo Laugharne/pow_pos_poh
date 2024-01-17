@@ -83,7 +83,7 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
-La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par la blockchain **Ethereum** et utilise [SHA-3](https://fr.wikipedia.org/wiki/SHA-3#La_permutation_par_bloc_de_Keccak) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
+La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par la blockchain **Ethereum** et utilise [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
 Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
@@ -246,6 +246,11 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 
 
 ## Ressources additionnelles
+
+- **Blockchains :**
+  - [Bitcoin - Open source P2P money](https://bitcoin.org)
+  - [Home | ethereum.org](https://ethereum.org)
+  - [Web3 Infrastructure for Everyone | Solana](https://solana.com/)
 
 - **Hash :**
   - 🇫🇷 [Fonction de hachage — Wikipédia](https://fr.wikipedia.org/wiki/Fonction_de_hachage)
