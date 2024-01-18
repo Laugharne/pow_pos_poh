@@ -4,8 +4,7 @@
 # PoW, PoS, PoH : Un guide simple des algorithmes de consensus blockchain
 
 
-> **AVERTISSEMENT :** Pour tous les *"Jean-Michel-Premier-degré"*, les extraits de code dans cet article ne sont là qu'à titre d'illustration. Ce sont des versions **très simplifiées** des algorithmes de consensus, juste pour en illustrer le fonctionnement.
-
+> **Note :** Les extraits de code dans cet article sont utilisés à des fins d'illustration et représentent des versions **simplifiées** des algorithmes de consensus afin de faciliter leur compréhension.
 
 ## TL;DR
 
@@ -217,7 +216,7 @@ Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous so
 Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminer par des considérations de conception spécifiques à votre cas d'utilisation.
 
 
-### Validations parallèles 🚀
+### Vérifications parallèles 🚀
 
 Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
 
@@ -242,7 +241,10 @@ La **Proof of History** en tant que telle ne garantit pas à elle seule la sécu
 
 ## Conclusions
 
-**TO DO**
+Les algorithmes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
+
+Tous essaient de résoudre la problèmatique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques. Tout en étant résistant aux défaillances et malveillances.
+
 
 
 --------
