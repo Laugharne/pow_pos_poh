@@ -42,11 +42,11 @@ La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** bas
 
 ### La difficulté de calcul
 
-Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque blocs en dessous de **10 minutes**.
+Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque bloc en dessous de **10 minutes**.
 
-Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier mais il y aura toujours un gagnant d’une quantité de Bitcoins.
+Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier, mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
-Notez qu’il n’y a pas de limite de nombre de participants car nul ne peut dire qui va arriver en premier.
+Notez qu’il n’y a pas de limite de nombre de participants, car nul ne peut dire qui va arriver en premier.
 
 Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
@@ -114,48 +114,47 @@ En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bi
 
 > Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
 
-Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchain or celles-ci n'utilisent pas de solution centralisée comme une horloge atomique, pour résoudre leur problème d'unicité de temps.
+Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchains or celles-ci n'utilisent pas de solution centralisée comme une horloge atomique, pour résoudre leur problème d'unicité de temps.
 
-La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des évenements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
+La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des événements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
 
-La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui perment de prouver l'écoulement du temps entre deux évenements. Les noeuds n'ont pas à attendre d'être tous coordonnés au niveaux de l'horodatage, dès qu'un évenement arrive, il est impossible de placer ceux se produisant après, avant celui ci.
+La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui permet de prouver l'écoulement du temps entre deux événements. Les nœuds n'ont pas à attendre d'être tous coordonnés au niveau de l'horodatage, dès qu'un événement arrive, il est impossible de placer ceux se produisant après, avant celui-ci.
 
 > **Preuve d'ordonancement** pourrait aussi être un terme valable pour la PoH.
 
-En prenant un exemple simple, imaginez une **escalier** : pour en atteindre le haut, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
+En prenant un exemple simple, imaginez un **escalier** : pour en atteindre le haut, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
 
 ### Comment valider ce passage du temps numérique ?
 
-Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (*ou étape*)
-Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel; on ne peux monté sur une marche que si on a monté la précédente. On ne peux donc avoir qu'une valeur de sortie donnée (*marche courante*) pour une valeur d'entrée (*la marche précédente*).
+Toujours en reprenant la métaphore des escaliers, imaginons un hash à chaque marche (*ou étape*). Le premier étage correspond au temps zéro et le dernier étage correspond au temps actuel ; on ne peut monter sur une marche que si on a monté la précédente. On ne peut donc avoir qu'une valeur de sortie donnée (*marche courante*) pour une valeur d'entrée (*la marche précédente*).
 
 La PoS ajoute un registre d'historique des transactions et des blocs à chaque nœud. Cela permet aux utilisateurs de vérifier si leurs transactions ont été incluses dans le réseau ou pas.
 
-La fonction utilisé pour créer ce registre est appelée **(High Frequency) Verifiable Delay Function** ou **VDF**.
+La fonction utilisée pour créer ce registre est appelée **(High Frequency) Verifiable Delay Function** ou **VDF**.
 
 
 ### Verifiable Delay Function (VDF) ⏲️
 
-Le VDF génère un résultat **unique et vérifiable**, de par son exécution permanente, plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
+Le VDF génère un résultat **unique et vérifiable**, par son exécution permanente, plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
 
 Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
 Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (*count*). Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
 
-L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de **CPU**. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de **CPU**. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
 ![](assets/insertion.png)
 
 *(Enregistrement de messages dans une séquence de Preuve d'Historique)*
 
-Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
+Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions, mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
 
-Les données insérées dans la PoH, font elles même reférence aux précédentes. La reférence précédente (`last_hash`)
+Les données insérées dans la PoH, font elles-mêmes référence aux précédentes. `last_hash` fait référence au fait que les données entrantes dans la Preuve d'Historique inclue des références à elle-même. Elle est incorporée en tant que partir du message, signé avec une clef privée lors de l'insertion, garantissant ainsi qu'elle ne peut pas être modifiée sans la clé privée. 
 
 ![](assets/back_ref.png)
 
-Et c'est parce que le message contient le hash `0xdeadc0de`, nous savons qu'il a été généré après la création du décompte `510144806912`.
+Et c'est parce que le message contient le hash `0xdeadc0de`, que nous savons qu'il a été généré après la création du décompte `510144806912`.
 
 
 **Voici un exemple de code simplifié en Rust qui illustre un mécanisme de "Verifiable Delay Function" (VDF) :**
@@ -215,7 +214,7 @@ Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous so
 
 > **ENCORE UNE FOIS**, ce n'est qu'une **illustration simplifiée**.
 
-Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
+Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminer par des considérations de conception spécifiques à votre cas d'utilisation.
 
 
 ### Validations parallèles 🚀
@@ -226,7 +225,7 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre sy
 
 *(vérifications en parallèle)*
 
-Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
+Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis, fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
 
 
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
@@ -250,7 +249,7 @@ La **Proof of History** en tant que telle ne garantit pas à elle seule la sécu
 
 Crédits : **[Franck Maussand](mailto:franck@maussand.net)**
 
-*Merci à [**Igor Bournazel**](https://github.com/ibourn) pour ses suggestions et la relecture de cet article.*
+*Merci à [**Igor Bournazel**](https://github.com/ibourn) pour la relecture de cet article.*
 
 N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**function dispatcher des EVM**](https://medium.com/@franck.maussand/optimisation-sur-ethereum-faites-la-diff%C3%A9rence-avec-les-noms-de-fonctions-ba4692c9e39f) (🇫🇷) !
 
@@ -260,9 +259,9 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 ## Ressources additionnelles
 
 - **Blockchains :**
-  - [Bitcoin - Open source P2P money](https://bitcoin.org)
-  - [Home | ethereum.org](https://ethereum.org)
-  - [Web3 Infrastructure for Everyone | Solana](https://solana.com/)
+  - 🇬🇧 [Bitcoin - Open source P2P money](https://bitcoin.org)
+  - 🇬🇧 [Home | ethereum.org](https://ethereum.org)
+  - 🇬🇧 [Web3 Infrastructure for Everyone | Solana](https://solana.com/)
 
 - **Hash :**
   - 🇫🇷 [Fonction de hachage — Wikipédia](https://fr.wikipedia.org/wiki/Fonction_de_hachage)
