@@ -137,15 +137,25 @@ La fonction utilisé pour créer ce registre est appelée **(High Frequency) Ver
 
 ### Verifiable Delay Function (VDF) ⏲️
 
-Le VDF génère un résultat unique et vérifiable, de par son exécution permanante, opérant plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
+Le VDF génère un résultat **unique et vérifiable**, de par son exécution permanente, plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
 
 Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
-Le processus fonctionne en boucle, générant un hash (SHA256) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (count). Il est crucial de noter que le hash est  ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
+Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (*count*). Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
 
-L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de CPU. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des ASICs. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de **CPU**. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, tel que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+
+![](assets/insertion.png)
+
+*(Enregistrement de messages dans une séquence de Preuve d'Historique)*
 
 Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
+
+Les données insérées dans la PoH, font elles même reférence aux précédentes. La reférence précédente (`last_hash`)
+
+![](assets/back_ref.png)
+
+Et c'est parce que le message contient le hash `0xdeadc0de`, nous savons qu'il a été généré après la création du décompte `510144806912`.
 
 
 **Voici un exemple de code simplifié en Rust qui illustre un mécanisme de "Verifiable Delay Function" (VDF) :**
@@ -208,13 +218,15 @@ Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous so
 Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminé par des considérations de conception spécifiques à votre cas d'utilisation.
 
 
-
-
-### Validations en parallèles 🚀
+### Validations parallèles 🚀
 
 Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
 
-Les nœuds peuvent fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
+![](assets/verifications.png)
+
+*(vérifications en parallèle)*
+
+Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
 
 
 **Version simplifiée de la validation de bloc (PoH) en Rust :**
@@ -304,3 +316,4 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Verifiable Delay Functions](https://www.youtube.com/watch?v=_-feyaZZjEw)
   - 🇬🇧 [Verifiable Delay Functions: Applications and Candidate Constructions - BPASE '18](https://www.youtube.com/watch?v=qUoagL7OZ1k)
   - 🇬🇧 [Verifiable Delayed Functions I - CANARI](https://canari.math.u-bordeaux.fr/seminar/ciao-2020-02-04-1400-BenjaminWesolowski.pdf)
+  - 🇬🇧 [Verifiable Delay Functions - A brief and gentle introduction](https://medium.com/iovlabs-innovation-stories/verifiable-delay-functions-8eb6390c5f4)
