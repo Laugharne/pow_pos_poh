@@ -229,7 +229,7 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre sy
 Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
 
 
-**Version simplifiée de la validation de bloc (PoH) en Rust :**
+**Version simplifiée de la vérification de bloc (PoH) en Rust :**
 
 ```rust
 
