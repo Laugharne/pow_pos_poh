@@ -223,10 +223,10 @@ Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous so
 
 > **ENCORE UNE FOIS**, ce n'est qu'une **illustration simplifiée**.
 
-Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminer par des considérations de conception spécifiques à votre cas d'utilisation.
+Le choix de la valeur de `PERIOD` dépend des exigences spécifiques du système, y compris la tolérance au temps, la sécurité souhaitée et les ressources disponibles. Il est à déterminer par des considérations de conception spécifiques à votre cas d'utilisation.
 
 
-### Vérifications parallèles 🚀
+### Des vérifications parallèles 🚀
 
 Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
 
@@ -235,6 +235,11 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre sy
 *(vérifications en parallèle)*
 
 Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis, fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
+
+La preuve devra contenir chaque hash intermédiaire, puis chaque calcul de hash intermédiaire pourra être vérifié en parallèle.
+
+- **L'avantage** réside dans les performances, car cela réduit les surcharges de messagerie et la latence en fournissant un ordre de transaction prédéterminé.
+- **L'inconvénient** de cela est une taille de preuve très importante et des exigences matérielles généralement élevées pour les validateurs Solana.
 
 
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
@@ -251,9 +256,9 @@ block_chain.par_iter().for_each(|block| {
 post_synchro(&block_chain);
 ```
 
-> Dans l'extrait de code précédent, la bibliothèque `rayon` est utilisée pour parallèliser les vérifications des messages.  (voir **[crates.io](https://crates.io/crates/rayon)**)
+> Dans l'extrait de code précédent, la bibliothèque `rayon` est utilisée pour parallèliser les vérifications des messages. (voir **[crates.io](https://crates.io/crates/rayon)**)
 
-La **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
+À Noter que la **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
 
 ## Conclusions
