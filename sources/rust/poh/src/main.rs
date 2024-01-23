@@ -32,6 +32,17 @@ fn set_block(index: u32, transactions: String) -> Block {
 }
 
 
+fn post_synchro( blockchain: &Vec<Block>) {
+	// TODO
+}
+
+fn par_verification( block: &Block) {
+	// TODO
+	//let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
+	//let block_hash: String = digest(to_hash);
+}
+
+
 fn main() {
 	println!("Hello, proof of stack!");
 
@@ -56,13 +67,12 @@ fn main() {
 
 	});
 
+
 	block_chain.par_iter().for_each(|block| {
-		// TODO
-		//let to_hash: String    = format!("{}{}{}", previous_block_hash, current_transactions.index, current_transactions.data);
-		//let block_hash: String = digest(to_hash);
-		
-	
+		par_verification(block);
 	});
+
+	post_synchro(&block_chain);
 
 	dbg!(block_chain);
 

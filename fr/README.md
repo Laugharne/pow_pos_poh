@@ -153,7 +153,7 @@ Son exécution est :
 - Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds.
 - Et s'exécute sur un seul cœur de **CPU**.
 
-Cela offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données d'entré et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+Offrant ainsi une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données d'entré et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
 ![](assets/insertion.png)
 
@@ -197,12 +197,12 @@ impl VDFState {
 
         // Periodically check for the desired output
         if self.count % PERIOD != 0 { return;}
-        self.get_state();
+        self.output();
     }
 
-    fn get_state(&self) {
+    // Publish the hash, count, and other relevant data.
+    fn output(&self) {
         // Must perform additional checks on the current state.
-        // Publish the hash, count, and other relevant data.
         println!("Hash: {}, Count: {}", self.hash, self.count);
     }
 
@@ -240,11 +240,18 @@ Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqu�
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
 
 ```rust
+use rayon::prelude::*;
 
-// TODO
+// ...
 
+block_chain.par_iter().for_each(|block| {
+    par_verification(block);
+});
+
+post_synchro(&block_chain);
 ```
 
+> Dans l'extrait de code précédent, la bibliothèque `rayon` est utilisée pour parallèliser les vérifications des messages.  (voir **[crates.io](https://crates.io/crates/rayon)**)
 
 La **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
