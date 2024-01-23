@@ -153,7 +153,7 @@ Son exécution est :
 - Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds.
 - Et s'exécute sur un seul cœur de **CPU**.
 
-Cela offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+Cela offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données d'entré et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
 ![](assets/insertion.png)
 
