@@ -10,7 +10,7 @@
 
 1. Le mécanisme de consensus est un procédé par lequel les nœuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
 2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
-3. L'horodatage est un mécanisme qui permet d'associer une valeur temporelle à un évenement.
+3. L'horodatage est un mécanisme qui permet d'associer une valeur temporelle à un événement.
 4. La PoH n'est pas un algorithme de consensus, mais une horloge avant consensus.
 
 
@@ -47,7 +47,7 @@ Le premier nœud à résoudre correctement le calcul est récompensé par un cer
 
 Notez qu’il n’y a pas de limite de nombre de participants, car nul ne peut dire qui va arriver en premier.
 
-Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié environ tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
+Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié approximativement tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
 Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
 
@@ -113,15 +113,13 @@ En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bi
 
 > Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
 
-Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchains or celles-ci n'utilisent pas de solution centralisée comme une horloge atomique, pour résoudre leur problème d'unicité de temps.
+Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchains, or celles-ci n'utilisent pas de solution centralisée, comme des horloges atomiques, pour résoudre leur problème d'unicité de temps.
 
 La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des événements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
 
 La PoH est une sorte d'**horloge avant consensus** (*Clock before consensus*) qui permet de prouver l'écoulement du temps entre deux événements. Les nœuds n'ont pas à attendre d'être tous coordonnés au niveau de l'horodatage, dès qu'un événement arrive, il est impossible de placer ceux se produisant après, avant celui-ci.
 
-> **Preuve d'ordonancement** pourrait aussi être un terme valable pour la PoH.
-
-En prenant un exemple simple, imaginez un **escalier** : pour en atteindre le haut, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
+En prenant un exemple simple, imaginez un **escalier**, pour en atteindre le haut, il faut d'abord gravir la première marche, puis la suivante, etc., jusqu'à atteindre la marche finale. La preuve d'historique garantit la validité de chaque transaction enchaînant la sienne à la précédente.
 
 
 ### Comment valider ce passage du temps numérique ?
@@ -139,17 +137,33 @@ Le VDF génère un résultat **unique et vérifiable**, par son exécution perma
 
 Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
-Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque tour de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Périodiquement, le résultat de sortie est associé à un nombre défini, le décompte (*count*). Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
+![](assets/timestamps.png)
 
-L'exécution est atomique, non parallélisable et s'exécute sur un seul cœur de **CPU**. Elle est configurée pour maintenir une vitesse d'exécution homogène entre les nœuds, offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
+*(Pour reprendre l'exemple de l'escalier, chaque "marche" a été gravie à un temps donné)*
+
+Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque "tour" de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Le résultat de sortie est associé à un nombre défini, le décompte (*count*) ce réultat est enregistré périodiquement !
+
+Ce qui nous assure que l'ordre enregistré pour chaque compteur est le même que celui qui s'est déroulé en temps réel.
+
+Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
+
+Son exécution est :
+- Atomique.
+- Non parallélisable.
+- Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds.
+- Et s'exécute sur un seul cœur de **CPU**.
+
+Cela offrant une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données ajoutées et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
 ![](assets/insertion.png)
 
 *(Enregistrement de messages dans une séquence de Preuve d'Historique)*
 
-Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions, mais uniquement leur **ordonnance relative**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
+Il est important de noter que le PoH ne garantit pas la chronologie absolue des transactions, mais uniquement leur **ordonnancement relatif**. Cela signifie qu'une transaction peut arriver après une autre même si elle est antérieure.
 
-Les données insérées dans la PoH, font elles-mêmes référence aux précédentes. `last_hash` fait référence au fait que les données entrantes dans la Preuve d'Historique inclue des références à elle-même. Elle est incorporée en tant que partir du message, signé avec une clef privée lors de l'insertion, garantissant ainsi qu'elle ne peut pas être modifiée sans la clé privée. 
+> **Preuve d'ordonnancement** pourrait aussi être un terme valable pour la PoH.
+
+Les données insérées dans la PoH, font elles-mêmes référence aux précédentes. `last_hash` fait référence au fait que les données entrantes dans la Preuve d'Historique incluent des références à elle-même. Elle est incorporée en tant que partie du message, signé avec une clef privée lors de l'insertion, garantissant ainsi qu'elle ne peut pas être modifiée sans la clé privée. 
 
 ![](assets/back_ref.png)
 
@@ -160,6 +174,8 @@ Et c'est parce que le message contient le hash `0xdeadc0de`, que nous savons qu'
 
 ```rust
 use sha256::digest;
+
+const PERIOD: u64 = 1000;
 
 struct VDFState {
     hash : String,
@@ -180,32 +196,26 @@ impl VDFState {
         self.count += 1;
 
         // Periodically check for the desired output
-        if self.count % PERIOD == 0 {
-            self.get_state();
-        }
+        if self.count % PERIOD != 0 { return;}
+        self.get_state();
     }
 
     fn get_state(&self) {
         // Must perform additional checks on the current state.
-        // e.g., matching the output with a predefined target or criteria.
         // Publish the hash, count, and other relevant data.
         println!("Hash: {}, Count: {}", self.hash, self.count);
     }
 
 }
 
-const PERIOD: u64 = 1000;
-
-
 fn main() {
     let mut vdf = VDFState::new();
 
-    // Simulate executing VDF in a loop with new data (transactions).
+    // VDF simulation in a loop with new data (transactions).
     for _ in 0..10000 {
         let transaction_data = "Transaction Data"; // Replace with actual transaction data
         vdf.execute(transaction_data);
     }
-
 }
 ```
 
@@ -218,7 +228,7 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques de votre sy
 
 ### Vérifications parallèles 🚀
 
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être. Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
 
 ![](assets/verifications.png)
 
@@ -243,7 +253,7 @@ La **Proof of History** en tant que telle ne garantit pas à elle seule la sécu
 
 Les algorithmes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
 
-Tous essaient de résoudre la problèmatique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques. Tout en étant résistant aux défaillances et malveillances.
+Tous essaient de résoudre la problématique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques. Tout en étant résistant aux défaillances et malveillances.
 
 
 
