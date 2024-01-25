@@ -239,7 +239,7 @@ Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqu�
 La preuve devra contenir chaque hash intermédiaire, puis chaque calcul de hash intermédiaire pourra être vérifié en parallèle.
 
 - **L'avantage** réside dans les performances, car cela réduit les surcoûts dans les échanges de messages et la latence en fournissant un ordre de transaction prédéterminé.
-- **L'inconvénient** de cela est une taille de preuve très importante et des **[exigences matérielles](https://docs.solana.com/running-validator/validator-reqs)** généralement élevées pour les validateurs.
+- **L'inconvénient** de cela est une taille de preuve très importante et des **[exigences matérielles](https://docs.solana.com/running-validator/validator-reqs)** (🇬🇧) généralement élevées pour les validateurs.
 
 
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
