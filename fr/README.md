@@ -238,8 +238,8 @@ Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqu�
 
 La preuve devra contenir chaque hash intermédiaire, puis chaque calcul de hash intermédiaire pourra être vérifié en parallèle.
 
-- **L'avantage** réside dans les performances, car cela réduit les surcharges de messagerie et la latence en fournissant un ordre de transaction prédéterminé.
-- **L'inconvénient** de cela est une taille de preuve très importante et des exigences matérielles généralement élevées pour les validateurs Solana.
+- **L'avantage** réside dans les performances, car cela réduit les surcoûts dans les échanges de messages et la latence en fournissant un ordre de transaction prédéterminé.
+- **L'inconvénient** de cela est une taille de preuve très importante et des **[exigences matérielles](https://docs.solana.com/running-validator/validator-reqs)** généralement élevées pour les validateurs.
 
 
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
@@ -340,3 +340,8 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Verifiable Delay Functions: Applications and Candidate Constructions - BPASE '18](https://www.youtube.com/watch?v=qUoagL7OZ1k)
   - 🇬🇧 [Verifiable Delayed Functions I - CANARI](https://canari.math.u-bordeaux.fr/seminar/ciao-2020-02-04-1400-BenjaminWesolowski.pdf)
   - 🇬🇧 [Verifiable Delay Functions - A brief and gentle introduction](https://medium.com/iovlabs-innovation-stories/verifiable-delay-functions-8eb6390c5f4)
+
+- **Hardware Requirements :**
+  - 🇬🇧 [Validator Requirements | Solana Docs](https://docs.solana.com/running-validator/validator-reqs)
+  - 🇬🇧 [Solana Nodes - The Complete Guide (2023)](https://www.alchemy.com/overviews/solana-nodes)
+
