@@ -331,6 +331,9 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Break | Solana](https://break.solana.com/)
   - 🇬🇧 [Proof of History: A Clock for Blockchain by Anatoly Yakovenko](https://medium.com/solana-labs/proof-of-history-a-clock-for-blockchain-cf47a61a9274)
   - 🇬🇧 [Proof of History Explained by a Water Clock](https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8)
+  - 🇬🇧 [Joachim Neu — The Why and How of PoS Ethereum's Consensus Problem (ETHconomics @ Devconnect 2022) - YouTube](https://www.youtube.com/watch?v=2nMS-TK_tMw)
+  - 🇬🇧 [GitHub - ethereum/annotated-spec: Vitalik's annotated eth2 spec.](https://github.com/ethereum/annotated-spec)
+  - 🇫🇷 [The Beacon Chain Ethereum 2.0 explainer you need to read first | ethos.dev](https://ethos.dev/beacon-chain)
 
 
 - **VDF :**
@@ -341,7 +344,7 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Verifiable Delayed Functions I - CANARI](https://canari.math.u-bordeaux.fr/seminar/ciao-2020-02-04-1400-BenjaminWesolowski.pdf)
   - 🇬🇧 [Verifiable Delay Functions - A brief and gentle introduction](https://medium.com/iovlabs-innovation-stories/verifiable-delay-functions-8eb6390c5f4)
 
-- **Hardware Requirements :**
+- **Hardware Requirements for Solana :**
   - 🇬🇧 [Validator Requirements | Solana Docs](https://docs.solana.com/running-validator/validator-reqs)
   - 🇬🇧 [Solana Nodes - The Complete Guide (2023)](https://www.alchemy.com/overviews/solana-nodes)
 
