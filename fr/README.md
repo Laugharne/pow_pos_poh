@@ -9,7 +9,7 @@
 ## TL;DR
 
 1. Le mécanisme de consensus est un procédé par lequel les nœuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
-2. Le choix de l'algorithme de consensus a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
+2. Le choix des algorithmes a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
 3. L'horodatage est un mécanisme qui permet d'associer une valeur temporelle à un événement.
 4. La PoH n'est pas un algorithme de consensus, mais une horloge avant consensus.
 
