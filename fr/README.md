@@ -1,10 +1,10 @@
 ![](assets/pow_pos_poh.png)
 
 
-# PoW, PoS, PoH : Un guide simple des algorithmes de consensus blockchain
+# PoW, PoS, PoH : Un guide simple des mécanismes de consensus blockchain
 
 
-> **Note :** Les extraits de code dans cet article sont utilisés à des fins d'illustration et représentent des versions **simplifiées** des algorithmes de consensus afin de faciliter leur compréhension.
+> **Note :** Les extraits de code dans cet article sont utilisés à des fins d'illustration et représentent des versions **simplifiées** des algorithmes afin de faciliter leur compréhension.
 
 ## TL;DR
 
@@ -17,26 +17,26 @@
 
 ## Introduction
 
-Les algorithmes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
+Les mécanismes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
 
-Les rôles des algorithmes de consensus sont les suivants :
+Les principaux rôles des mécanismes de consensus sont les suivants :
 1. **Obtenir un accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
-2. **Résister aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de nœuds défaillants ou malveillants.
-3. **Décentraliser :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation d'une autorité.
+2. **Résister aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de [nœuds défaillants ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
+3. **Décentraliser :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation des informations.
 4. **Sécuriser :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
-Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur la majorité des nœuds pour éviter les problèmes de **double dépense**.
+Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur une majorité de nœuds pour éviter les problèmes de **double dépense**.
 
-Il existe bien des manières de faire. En voici trois parmi les plus importantes ou usitées.
+Il existe bien des manières de faire. En voici trois parmi les principales.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
 - La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
-- La **preuve d'historique** (*proof of history*) présente sur **Solana**.
+- La **preuve d'historique** (*proof of history*) présente sur **Solana**. (*PoS en fait, la PoH s'y rajoute, mais on y reviendra plus tard*).
 
 
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) utilisé pour créer l’empreinte numérique d’un document. Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
+La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
 ### La difficulté de calcul
@@ -45,7 +45,7 @@ Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Di
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier, mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
-Notez qu’il n’y a pas de limite de nombre de participants, car nul ne peut dire qui va arriver en premier.
+Notez qu’il n’y a pas de limite de nombre de participants, nul ne peut dire qui va arriver en premier.
 
 Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié approximativement tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
@@ -84,9 +84,9 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par la blockchain **Ethereum** et utilise [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
-Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Plus un participant en détient et est disposé à la bloquer, plus il a de chances d'être sélectionné pour créer un bloc. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
+Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
-Le choix des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté de recherche de *leading zeros* n'a pas de sens avec ce consensus.
+Le mécanisme des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté de recherche de *leading zeros* n'a pas de sens avec ce consensus.
 
 
 ### La carotte et le baton
@@ -104,7 +104,7 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 }
 ```
 
-> Sur la même séquence de **5 blocs** que précédemment, il n'a fallu calculer que **5 hashs** pour les valider tous.
+> Sur la même séquence de **5 blocs** que précédemment, il ne m'a fallu calculer que **5 hashs** pour les valider tous.
 
 
 ## 📜 Proof of History (PoH)
@@ -113,7 +113,7 @@ En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bi
 
 > Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
 
-Comme dit dans l'introduction, la synchronicité des états est essentiel pour les blockchains, or celles-ci n'utilisent pas de solution centralisée, comme des horloges atomiques, pour résoudre leur problème d'unicité de temps.
+Comme dit dans l'introduction, la synchronisation des états est essentiel pour les blockchains, or celles-ci n'utilisent pas de solution centralisée, comme des horloges atomiques, pour résoudre leur problème d'unicité de temps.
 
 La **preuve d'historique** (*Proof of history : PoH*) est un mécanisme utilisé par la blockchain **Solana** qui permet la synchronisation des événements de manière très performante. Elle se trouve ainsi combinée avec la *Proof of Stake*. Reposant sur une base de données distribuée appelée *Account State*. Chaque transaction est stockée dans cette base de données. Pour qu'elles soient acceptées, elles doivent être liées à une **transaction précédente** existante. La validation d'une transaction précédente implique la validation des suivantes.
 
@@ -133,7 +133,7 @@ La fonction utilisée pour créer ce registre est appelée **(High Frequency) Ve
 
 ### Verifiable Delay Function (VDF) ⏲️
 
-Le VDF génère un résultat **unique et vérifiable**, par son exécution permanente, plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.
+Le VDF génère un résultat **unique et vérifiable**, par son exécution permanente, plusieurs milliers de fois par seconde. Sa caractéristique fondamentale réside dans l'impossibilité de prédire le résultat sans exécuter la fonction, conférant ainsi une garantie de sécurité.  
 
 Cette fonctionnalité trouve son utilité dans la capacité à placer un événement de manière précise, avant ou après un autre, renforçant ainsi la robustesse de diverses applications blockchain et protocoles de consensus.
 
@@ -149,9 +149,8 @@ Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wi
 
 Son exécution est :
 - Atomique.
-- Non parallélisable.
-- Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds.
-- Et s'exécute sur un seul cœur de **CPU**.
+- Non parallélisable, s'exécute sur un seul cœur de **CPU**.
+- Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds. [(ticks, slots, epochs 🇫🇷)](https://cryptoast.fr/solana-sol-blockchain-atypique-grandes-ambitions/#De_quoi_est_composee_larchitecture_technologique_de_Solana)
 
 Offrant ainsi une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données d'entré et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
@@ -228,13 +227,13 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques du système
 
 ### Des vérifications parallèles 🚀
 
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU*).
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU ?*).
 
 ![](assets/verifications.png)
 
 *(vérifications en parallèle)*
 
-Les nœuds peuvent ainsi fonctionner de manière indépendante sans être bloqués par des dépendances temporelles entre les blocs. Les horodatages précis, fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps.
+Les horodatages précis, fournis par la Proof of History, permettent aux nœuds de travailler de manière indépendante sur plusieurs blocs en même temps, sans être bloqués par des dépendances temporelles.
 
 La preuve devra contenir chaque hash intermédiaire, puis chaque calcul de hash intermédiaire pourra être vérifié en parallèle.
 
@@ -263,7 +262,7 @@ post_synchro(&block_chain);
 
 ## Conclusions
 
-Les algorithmes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
+Les mécanismes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
 
 Tous essaient de résoudre la problématique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques. Tout en étant résistant aux défaillances et malveillances.
 
@@ -287,6 +286,10 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Home | ethereum.org](https://ethereum.org)
   - 🇬🇧 [Web3 Infrastructure for Everyone | Solana](https://solana.com/)
 
+- **Problème des généraux byzantins :**
+  - 🇫🇷 [Problème des généraux byzantins — Wikipédia](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins)
+  - 🇬🇧 [Byzantine fault - Wikipedia](https://en.wikipedia.org/wiki/Byzantine_fault)
+
 - **Hash :**
   - 🇫🇷 [Fonction de hachage — Wikipédia](https://fr.wikipedia.org/wiki/Fonction_de_hachage)
   - 🇬🇧 [Hash function - Wikipedia](https://en.wikipedia.org/wiki/Hash_function)
@@ -295,7 +298,6 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇫🇷 [SHA-3 — Wikipédia](https://fr.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [SHA-3 - Wikipedia](https://en.wikipedia.org/wiki/SHA-3)
   - 🇬🇧 [Blockchain Demo - Hash](https://andersbrownworth.com/blockchain/hash)
-
 
 - **Attaques :**
   - 🇫🇷 [Attaque des 51 %](https://fr.wikipedia.org/wiki/Attaque_des_51_%25)
@@ -323,9 +325,11 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Proof-of-stake (PoS) | ethereum.org](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/)
   - 🇬🇧 [Proof-of-stake and security](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security)
   - 🇬🇧 [What is Proof of Stake & How Does Confirmation Work in PoS?](https://coindcx.com/blog/crypto-basics/what-is-proof-of-stake-pos/)
+  - 🇬🇧 [The Beacon Chain Ethereum 2.0 explainer you need to read first | ethos.dev](https://ethos.dev/beacon-chain)
 
 
 - **PoH :**
+  - 🇫🇷 [De quoi est composée l’architecture technologique de Solana ?](https://cryptoast.fr/solana-sol-blockchain-atypique-grandes-ambitions/#De_quoi_est_composee_larchitecture_technologique_de_Solana)
   - 🇬🇧 [Proof of History: How Solana brings time to crypto | Solana](https://solana.com/news/proof-of-history)
   - 🇬🇧 [Solana: A new architecture for a high performance blockchain](https://solana.com/solana-whitepaper.pdf)
   - 🇬🇧 [Break | Solana](https://break.solana.com/)
@@ -333,7 +337,6 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Proof of History Explained by a Water Clock](https://medium.com/solana-labs/proof-of-history-explained-by-a-water-clock-e682183417b8)
   - 🇬🇧 [Joachim Neu — The Why and How of PoS Ethereum's Consensus Problem (ETHconomics @ Devconnect 2022) - YouTube](https://www.youtube.com/watch?v=2nMS-TK_tMw)
   - 🇬🇧 [GitHub - ethereum/annotated-spec: Vitalik's annotated eth2 spec.](https://github.com/ethereum/annotated-spec)
-  - 🇫🇷 [The Beacon Chain Ethereum 2.0 explainer you need to read first | ethos.dev](https://ethos.dev/beacon-chain)
 
 
 - **VDF :**
@@ -343,6 +346,7 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [Verifiable Delay Functions: Applications and Candidate Constructions - BPASE '18](https://www.youtube.com/watch?v=qUoagL7OZ1k)
   - 🇬🇧 [Verifiable Delayed Functions I - CANARI](https://canari.math.u-bordeaux.fr/seminar/ciao-2020-02-04-1400-BenjaminWesolowski.pdf)
   - 🇬🇧 [Verifiable Delay Functions - A brief and gentle introduction](https://medium.com/iovlabs-innovation-stories/verifiable-delay-functions-8eb6390c5f4)
+
 
 - **Hardware Requirements for Solana :**
   - 🇬🇧 [Validator Requirements | Solana Docs](https://docs.solana.com/running-validator/validator-reqs)
