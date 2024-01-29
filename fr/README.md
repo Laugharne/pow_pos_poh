@@ -22,7 +22,7 @@ Les mécanismes de **consensus** permettent de se mettre d'accord sur une **vers
 Les principaux rôles des mécanismes de consensus sont les suivants :
 1. **Obtenir un accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
 2. **Résister aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de [nœuds défaillants ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
-3. **Décentraliser :** Éviter la nécessité d'une autorité centrale. Cela permet une résistance accrue à la censure et à la centralisation des informations.
+3. **Décentraliser :** Cela permet une résistance accrue à la censure et à la nécessité d'une autorité centrale.
 4. **Sécuriser :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
 
 Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur une majorité de nœuds pour éviter les problèmes de **double dépense**.
@@ -36,12 +36,12 @@ Il existe bien des manières de faire. En voici trois parmi les principales.
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** basée sur l’algorithme [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
+La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** emploie [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) qui est utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
 ### La difficulté de calcul
 
-Rentre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque bloc en dessous de **10 minutes**.
+Entre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque bloc en dessous de **10 minutes**.
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier, mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
@@ -91,7 +91,7 @@ Le mécanisme des validateurs est déterminé par leur **enjeu** et il n'y a ain
 
 ### La carotte et le baton
 
-L'idée fondamentale étant que les individus/entités qui ont un **intérêt financier** dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul.
+L'idée fondamentale étant que les individus/entités qui ont un **intérêt financier** dans la stabilité et la sécurité du réseau sont moins susceptibles de se comporter de manière malveillante. Leur participation au consensus est basée sur la possession d'une quantité de cryptomonnaie mise en jeu plutôt que sur la puissance de calcul. Sur Ethereum la somme en jeu est de **32 ETH** par nœud.
 
 
 **Version simplifiée de création de bloc (PoS) en Rust :**
@@ -150,7 +150,7 @@ Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wi
 Son exécution est :
 - Atomique.
 - Non parallélisable, s'exécute sur un seul cœur de **CPU**.
-- Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds. [(ticks, slots, epochs 🇫🇷)](https://cryptoast.fr/solana-sol-blockchain-atypique-grandes-ambitions/#De_quoi_est_composee_larchitecture_technologique_de_Solana)
+- Configurée pour maintenir une vitesse d'exécution homogène entre les nœuds. [(*ticks, slots, epochs* 🇫🇷)](https://cryptoast.fr/solana-sol-blockchain-atypique-grandes-ambitions/#De_quoi_est_composee_larchitecture_technologique_de_Solana)
 
 Offrant ainsi une protection contre les calculs effectués par des **ASICs**. Cela garantit également un minimum de fiabilité pour le décompte du temps. En outre, le hash des données, telles que les transactions, est ajouté au dernier état généré. L'état, les données d'entré et le décompte sont ensuite publiés, assurant un horodatage directement encodé dans les messages de transaction.
 
@@ -227,7 +227,7 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques du système
 
 ### Des vérifications parallèles 🚀
 
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un CPU (*ou GPU ?*).
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un processeur.
 
 ![](assets/verifications.png)
 
@@ -260,7 +260,7 @@ post_synchro(&block_chain);
 À Noter que la **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
 
-## Conclusions
+## Conclusion
 
 Les mécanismes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
 
