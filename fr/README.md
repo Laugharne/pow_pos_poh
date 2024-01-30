@@ -227,7 +227,7 @@ Le choix de la valeur de `PERIOD` dépend des exigences spécifiques du système
 
 ### Des vérifications parallèles 🚀
 
-Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un processeur.
+Énorme avantage du mécanisme de la PoH, la vérification des preuves peut être effectuée en parallèle, tandis que leur création ne peut pas l'être (*VDF oblige*). Cela permet une fragmentation et une distribution efficace des tâches entre les différents cœurs d'un processeur, CPU ou [GPU](https://docs.solanalabs.com/operations/guides/validator-start) (🇬🇧).
 
 ![](assets/verifications.png)
 
@@ -351,4 +351,5 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 - **Hardware Requirements for Solana :**
   - 🇬🇧 [Validator Requirements | Solana Docs](https://docs.solana.com/running-validator/validator-reqs)
   - 🇬🇧 [Solana Nodes - The Complete Guide (2023)](https://www.alchemy.com/overviews/solana-nodes)
+  - 🇬🇧 [Starting a Validator (Enabling CUDA)](https://docs.solanalabs.com/operations/guides/validator-start)
 
