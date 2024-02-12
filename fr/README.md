@@ -11,7 +11,7 @@
 1. Le mécanisme de consensus est un procédé par lequel les nœuds d'un réseau pair à pair se mettent d'accord sur un ensemble d'informations.
 2. Le choix des algorithmes a des implications sur la sécurité, la décentralisation, la consommation énergétique et divers aspects d'une blockchain.
 3. L'horodatage est un mécanisme qui permet d'associer une valeur temporelle à un événement.
-4. La PoH n'est pas un algorithme de consensus, mais une horloge avant consensus.
+4. La PoH n'est pas un algorithme de consensus, mais une "*horloge avant consensus*".
 
 
 
@@ -27,7 +27,7 @@ Les principaux rôles des mécanismes de consensus sont les suivants :
 
 Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur une majorité de nœuds pour éviter les problèmes de **double dépense**.
 
-Il existe bien des manières de faire. En voici trois parmi les principales.
+Voici trois parmi les principaux mécanismes de consensus en vigueur.
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
 - La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
 - La **preuve d'historique** (*proof of history*) présente sur **Solana**. (*PoS en fait, la PoH s'y rajoute, mais on y reviendra plus tard*).
@@ -36,16 +36,16 @@ Il existe bien des manières de faire. En voici trois parmi les principales.
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** emploie [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) qui est utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
+La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) y est utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
 ### La difficulté de calcul
 
-Entre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimale de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque bloc en dessous de **10 minutes**.
+Entre en jeu la notion de [difficulté de calcul](https://en.bitcoin.it/wiki/Difficulty) (🇬🇧) qui consiste en un nombre variable et minimal de zéros à obtenir en début de résultat de hash (*leading zeros*) avec l'usage d'un *nonce* incrémental dans les itérations de calcul. Cette [difficulté est ajustée](https://www.blockchain.com/explorer/charts/difficulty) (🇬🇧) tous les **2016 blocs** (environs deux semaines) de manière à conserver un temps moyen entre chaque bloc en dessous de **10 minutes**.
 
 Le premier nœud à résoudre correctement le calcul est récompensé par un certain nombre de bitcoins. Les nœuds vont essayer de trouver cette solution en utilisant leur puissance de calcul. Le temps nécessaire pour trouver la solution peut varier, mais il y aura toujours un gagnant d’une quantité de Bitcoins.
 
-Notez qu’il n’y a pas de limite de nombre de participants, nul ne peut dire qui va arriver en premier.
+Notez qu’il n’y a pas de limite de nombre de participants et nul ne peut dire qui va arriver en premier.
 
 Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié approximativement tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
 
@@ -82,9 +82,9 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
-La preuve d’enjeu est une alternative à la preuve de travail. Elle est utilisée par la blockchain **Ethereum** et utilise [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
+La preuve d’enjeu est une alternative à la preuve de travail. **Ethereum** se sert de [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
-Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
+Les par  ticipants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
 Le mécanisme des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté de recherche de *leading zeros* n'a pas de sens avec ce consensus.
 
@@ -111,7 +111,7 @@ fn creation_block(previous_block_hash: String, current_transactions: &Block) -> 
 
 En 2008, **Satoshi Nakamoto**, dans son **["White paper"](https://bitcoin.org/bitcoin.pdf)** (🇬🇧) a introduit le concept de "**timestamp server**". Bien qu'il n'utilise pas explicitement le terme "*blockchain*" dans ce document, il décrit les principes fondamentaux qui sous-tendent la technologie blockchain. Le "*timestamp server*" était un élément clé pour sécuriser l'ordre chronologique des transactions dans le système Bitcoin.
 
-> Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions de hachage cryptographiques.
+> Le terme "*blockchain*" par la suite, est devenu plus couramment utilisé pour décrire la structure de données décentralisée qui enregistre de manière immuable les transactions au travers de blocs connectés les uns aux autres à l'aide de fonctions cryptographiques de hachage.
 
 Comme dit dans l'introduction, la synchronisation des états est essentiel pour les blockchains, or celles-ci n'utilisent pas de solution centralisée, comme des horloges atomiques, pour résoudre leur problème d'unicité de temps.
 
@@ -141,7 +141,7 @@ Cette fonctionnalité trouve son utilité dans la capacité à placer un événe
 
 *(Pour reprendre l'exemple de l'escalier, chaque "marche" a été gravie à un temps donné)*
 
-Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque "tour" de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Le résultat de sortie est associé à un nombre défini, le décompte (*count*) ce réultat est enregistré périodiquement !
+Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itération. À chaque "tour" de fonction, le hash de sortie est réutilisé en tant qu'entrée, créant une chaîne continue de hachages. Le résultat de sortie est associé à un nombre défini, le décompte (*count*) ce résultat est enregistré périodiquement !
 
 Ce qui nous assure que l'ordre enregistré pour chaque compteur est le même que celui qui s'est déroulé en temps réel.
 
