@@ -21,13 +21,13 @@ Les mécanismes de **consensus** permettent de se mettre d'accord sur une **vers
 
 Les principaux rôles des mécanismes de consensus sont les suivants :
 1. **Obtenir un accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
-2. **Résister aux défaillances :** Être robuste. Le réseau doit fonctionner correctement même en présence de [nœuds défaillants ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
+2. **Résister aux défaillances :** Le réseau doit fonctionner correctement même en présence de [nœuds défaillants ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
 3. **Décentraliser :** Cela permet une résistance accrue à la censure et à la nécessité d'une autorité centrale.
-4. **Sécuriser :** Garantir l'intégrité des données, pas d'altération, préserver l'unicité.
+4. **Sécuriser :** Veiller à l'intégrité des données, préserver des altérations et assurer l'unicité.
 
-Le **solde** et l'**état** du réseau se doivent être **synchronisés** sur une majorité de nœuds pour éviter les problèmes de **double dépense**.
+Ils doivent aussi résoudre les enjeux majeurs des réseaux distribués, comme la double dépense. Le **solde** et l'**état** du réseau se doivent être **synchronisés**.
 
-Voici trois parmi les principaux mécanismes de consensus en vigueur.
+Voici trois parmi les principales méthodes en vigueur :
 - La **preuve de travail** (*proof of work*) utilisée pour le **Bitcoin**.
 - La **preuve d'enjeu** (*proof of stake*) utilisée maintenant par **Ethereum**.
 - La **preuve d'historique** (*proof of history*) présente sur **Solana**. (*PoS en fait, la PoH s'y rajoute, mais on y reviendra plus tard*).
@@ -82,9 +82,9 @@ fn mining_block(previous_block_hash: String, current_transactions: &Block, diffi
 
 ## 💰 Proof of Stake (PoS)
 
-La preuve d’enjeu est une alternative à la preuve de travail. **Ethereum** se sert de [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
+La preuve d’enjeu est une alternative à la preuve de travail. **Ethereum** se sert de [SHA-3](https://fr.wikipedia.org/wiki/SHA-3) pour créer l’empreinte numérique. Contrairement à Bitcoin, où les participants (*mineurs*) résolvent des problèmes complexes pour ajouter un bloc à la blockchain, la PoS requiert des efforts informatiques considérablement moins intensifs.
 
-Les par  ticipants (*validateurs*) sont choisis pour ajouter un nouveau bloc en fonction d'une quantité de cryptomonnaie qu'ils sont prêts à **"mettre en jeu"** **(staker)** en tant que garantie. Les validateurs seront soit récompensés (*jetons, frais de transaction*) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
+Les participants (*validateurs*) sont choisis pour ajouter un nouveau bloc.  Ces validateurs doivent **mettre en jeu** à **stacker** une quantité de cryptomonnaie en tant que garantie, ils seront soit récompensés (jetons, frais de transaction) pour leur travail, soit [pénalisés en cas de malveillance](https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/#pos-and-security) (🇬🇧).
 
 Le mécanisme des validateurs est déterminé par leur **enjeu** et il n'y a ainsi donc pas de nécessité à résoudre des problèmes mathématiques complexes. Par conséquent, la difficulté de recherche de *leading zeros* n'a pas de sens avec ce consensus.
 
@@ -145,7 +145,7 @@ Le processus fonctionne en boucle, générant un hash (*SHA256*) à chaque itér
 
 Ce qui nous assure que l'ordre enregistré pour chaque compteur est le même que celui qui s'est déroulé en temps réel.
 
-Il est crucial de noter que le hash est dit ["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) (🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
+Il est crucial de noter que le hash est résistant aux attaques de préimage (["preimage resistant"](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image) 🇫🇷), ce qui signifie qu'il est impossible de déduire la valeur d'entrée à partir de la valeur de sortie.
 
 Son exécution est :
 - Atomique.
@@ -162,7 +162,7 @@ Il est important de noter que le PoH ne garantit pas la chronologie absolue des 
 
 > **Preuve d'ordonnancement** pourrait aussi être un terme valable pour la PoH.
 
-Les données insérées dans la PoH, font elles-mêmes référence aux précédentes. `last_hash` fait référence au fait que les données entrantes dans la Preuve d'Historique incluent des références à elle-même. Elle est incorporée en tant que partie du message, signé avec une clef privée lors de l'insertion, garantissant ainsi qu'elle ne peut pas être modifiée sans la clé privée. 
+Les données insérées dans la PoH font référence aux précédentes  (`last_hash`). Les données entrantes sont ainsi auto-référenciées. Elle est incorporée en tant que partie du message, signé avec une clef privée lors de l'insertion, garantissant ainsi qu'elle ne peut pas être modifiée sans la clé privée. 
 
 ![](assets/back_ref.png)
 
@@ -218,7 +218,7 @@ fn main() {
 }
 ```
 
-Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité complètes, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
+Vous pouvez remplacer "*Transaction Data*" par les données réelles que vous souhaitez inclure dans le calcul du hash. Cet exemple n'inclut pas toutes les vérifications de sécurité, mais il donne une idée générale du fonctionnement d'un VDF dans un environnement de blockchain.
 
 > **ENCORE UNE FOIS**, ce n'est qu'une **illustration simplifiée**.
 
@@ -244,6 +244,8 @@ La preuve devra contenir chaque hash intermédiaire, puis chaque calcul de hash 
 **Version simplifiée de la vérification de bloc (PoH) en Rust :**
 
 ```rust
+// la bibliothèque (crate) `rayon` https://crates.io/crates/rayon
+// est utilisée pour parallèliser les vérifications des messages.
 use rayon::prelude::*;
 
 // ...
@@ -255,8 +257,6 @@ block_chain.par_iter().for_each(|block| {
 post_synchro(&block_chain);
 ```
 
-> Dans l'extrait de code précédent, la bibliothèque `rayon` est utilisée pour parallèliser les vérifications des messages. (voir **[crates.io](https://crates.io/crates/rayon)**)
-
 À Noter que la **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, comme **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
 
@@ -264,7 +264,7 @@ post_synchro(&block_chain);
 
 Les mécanismes de consensus, jouent un rôle crucial dans le fonctionnement des blockchains. Chacun de ces mécanismes présente des caractéristiques distinctes, influençant la sécurité, la décentralisation, les performances et la consommation énergétique d'une blockchain.
 
-Tous essaient de résoudre la problématique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques. Tout en étant résistant aux défaillances et malveillances.
+Tous essaient de résoudre la problématique qui consiste à concevoir un protocole permettant à un ensemble de processus de s'accorder sur des états/valeurs uniques, tout en étant résistant aux défaillances et malveillances.
 
 
 
