@@ -17,11 +17,11 @@
 
 ## Introduction
 
-Les mécanismes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain, et ce, malgré la possible présence de nœuds **défaillants** ou **malveillants**.
+Les mécanismes de **consensus** permettent de se mettre d'accord sur une **version commune et unique** des données partagées par une blockchain et ce malgré la possible présence de nœuds **défaillants** ou **malicieux**.
 
 Les principaux rôles des mécanismes de consensus sont les suivants :
 1. **Obtenir un accord sur l'état partagé :** Prouver que les transactions sont valides, leurs ordres, leurs origines.
-2. **Résister aux défaillances :** Le réseau doit fonctionner correctement même en présence de [nœuds défaillants ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
+2. **Résister aux défaillances :** Le réseau doit fonctionner correctement même en présence de [nœuds défectueux ou malveillants](https://fr.wikipedia.org/wiki/Probl%C3%A8me_des_g%C3%A9n%C3%A9raux_byzantins) (🇫🇷).
 3. **Décentraliser :** Cela permet une résistance accrue à la censure et à la nécessité d'une autorité centrale.
 4. **Sécuriser :** Veiller à l'intégrité des données, préserver des altérations et assurer l'unicité.
 
@@ -36,7 +36,7 @@ Voici trois parmi les principales méthodes en vigueur :
 
 ## ⚒️ Proof of Work (PoW)
 
-La preuve de travail est la méthode de consensus utilisée dans **Bitcoin** [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) y est utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
+La preuve de travail est la méthode de consensus utilisée dans **Bitcoin**, [**SHA-256**](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) (🇫🇷) y est utilisé pour créer l’empreinte numérique d’un document (le timestamp est intégré au hash). Pour chaque bloc, un nœud doit trouver une solution à un "*puzzle*" mathématique qui dépend du contenu du bloc et de son précédent, [comme illustré ici](https://andersbrownworth.com/blockchain/blockchain) (🇬🇧).
 
 
 ### La difficulté de calcul
@@ -272,7 +272,7 @@ Tous essaient de résoudre la problématique qui consiste à concevoir un protoc
 
 Crédits : **[Franck Maussand](mailto:franck@maussand.net)**
 
-*Merci à [**Igor Bournazel**](https://github.com/ibourn) pour la relecture de cet article.*
+*Merci à [Igor Bournazel](https://github.com/ibourn) pour la relecture de cet article.*
 
 N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**function dispatcher des EVM**](https://medium.com/@franck.maussand/optimisation-sur-ethereum-faites-la-diff%C3%A9rence-avec-les-noms-de-fonctions-ba4692c9e39f) (🇫🇷) !
 
@@ -304,6 +304,8 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇫🇷 [Attaque Sybil](https://fr.wikipedia.org/wiki/Attaque_Sybil)
   - 🇫🇷 [Qu’est-ce qu’une attaque Sybil (Sybil attack) ?](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)
   - 🇫🇷 [Qu’est-ce qu’une attaque 51% et quelles sont ses conséquences ?](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)
+  - 🇬🇧 [Ethereum PoS Attack and Defense — jmc](https://mirror.xyz/jmcook.eth/YqHargbVWVNRQqQpVpzrqEQ8IqwNUJDIpwRP7SS5FXs)
+  - 🇬🇧 / 🇫🇷 [34% Attack](https://www.linkedin.com/pulse/34-attack-smocking-art/)
   - 🇬🇧 [Double-spending — 51% attack](https://en.wikipedia.org/wiki/Double-spending#51%_attack)
   - 🇬🇧 [Sybil attack](https://en.wikipedia.org/wiki/Sybil_attack)
   - 🇫🇷 [Attaque de préimage — Wikipédia](https://fr.wikipedia.org/wiki/Attaque_de_pr%C3%A9image)
