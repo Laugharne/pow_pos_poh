@@ -47,14 +47,16 @@ Le premier nœud à résoudre correctement le calcul est récompensé par un cer
 
 Notez qu’il n’y a pas de limite de nombre de participants et nul ne peut dire qui va arriver en premier.
 
-Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié approximativement tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://buybitcoinworldwide.com/halving/) (🇬🇧).
+Initialement, la récompense était de 50 bitcoins par bloc miné, mais cela se réduit de moitié approximativement tous les quatre ans dans un événement connu sous le nom de ["**halving**"](https://bitbo.io/halving/) (🇬🇧).
 
-Au prochain halving (*article écrit début 2024*) qui aura lieu courant **2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc.
+Au prochain halving (*article écrit début 2024*) qui aura lieu **mi avril 2024**, la récompense passera de **6,25 BTC** à **3,125 BTC** par bloc. 
 
 
 ![](assets/halving.png)
 
-(*source : [buybitcoinworldwide.com](https://buybitcoinworldwide.com/halving/)*)
+(*source : [bitbo.io](https://buybitcoinworldwide.com/halving/)*)
+
+Chaque halving réduit le taux d'inflation du Bitcoin. La **ligne orange** représente le **taux d'inflation** du Bitcoin pendant une période donnée, tandis que la **ligne bleue** représente le nombre total de **bitcoins émis**.
 
 
 **Version simplifiée du minage (PoW) en Rust :**
@@ -257,6 +259,44 @@ block_chain.par_iter().for_each(|block| {
 post_synchro(&block_chain);
 ```
 
+```rust
+// Crate `rayon` https://crates.io/crates/rayon
+// is used to parallelize messages verification.
+use rayon::prelude::*;
+
+fn par_verification(block: &Block, previous_block: &Block) -> Result<(), &'static str> {
+    // Check if previous block hash is equal to current block hash.
+    if block.previous_block_hash != previous_block.hash {
+        return Err("Previous block hash don't match.");
+    }
+
+    if block.time_stamp <=  previous_block.time_stamp {
+        return Err("Invalid timestamp.");
+    }
+
+    // Check if current block content is coherent.
+    if !block.check_validity()  {
+        return Err("Current block state is not valide.");
+    }
+
+    Ok(())
+}
+
+// Verify all blocks in the blockchain in parallel.
+let results: Vec<Result<(), &'static str>> = block_chain
+    .par_windows(2)  // windows of two consecutives blocks.
+    .map(|window| par_verification(&window[1], &window[0]))
+    .collect();
+
+// Check for all verifications success.
+if results.into_iter().all(|result| result.is_ok()) {
+    post_synchro(&block_chain);
+} else {
+    // At least one fail.
+    // ...
+}
+```
+
 À Noter que la **Proof of History** en tant que telle ne garantit pas à elle seule la sécurité du réseau contre les attaques malveillantes, que ce soit **[l’attaque des 51%](https://coinacademy.fr/academie/quest-une-attaque-51-quelles-consequences/)** (🇫🇷), **[des 34%](https://www.linkedin.com/pulse/34-attack-smocking-art/)** (🇫🇷) ou **[l’attaque "Sybil"](https://coinacademy.fr/academie/attaque-sybil-attack-blockchain-noeud/)** (🇫🇷). C’est pourquoi elle est couplée avec la Proof of Stake sur **Solana**, ce qui permet de régler le problème.
 
 
@@ -319,7 +359,7 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
   - 🇬🇧 [What is Proof of Work? (Cryptocurrency Explanation)](https://www.youtube.com/watch?v=XLcWy1uV8YM)
   - 🇬🇧 [Blockchain.com | Charts - Network Difficulty](https://www.blockchain.com/explorer/charts/difficulty)
   - 🇬🇧 [Difficulty - Bitcoin Wiki](https://en.bitcoin.it/wiki/Difficulty)
-  - 🇬🇧 [Next Bitcoin Halving 2024 Date & Countdown [BTC Clock]](https://buybitcoinworldwide.com/halving/)
+  - 🇬🇧 [Next Bitcoin Halving 2024 Date & Countdown [BTC Clock]](https://bitbo.io/halving/)
 
 
 - **PoS :**
