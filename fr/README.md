@@ -321,6 +321,9 @@ N'hésitez pas à jeter un coup d'oeil sur mon précédent article sur le [**fun
 
 ## Ressources additionnelles
 
+- 🇬🇧 [The Energy Footprint of Blockchain Consensus
+Mechanisms Beyond Proof-of-Work](https://arxiv.org/pdf/2109.03667)
+
 - **Blockchains :**
   - 🇬🇧 [Bitcoin - Open source P2P money](https://bitcoin.org)
   - 🇬🇧 [Home | ethereum.org](https://ethereum.org)
